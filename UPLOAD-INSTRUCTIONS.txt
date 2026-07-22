@@ -1,1 +1,7 @@
-This is the complete website project. Upload the CONTENTS of this folder to the root of the GitHub repository, then commit the changes. Netlify should deploy automatically.
+1. Open the existing public GitHub repository.
+2. Choose Add file -> Upload files.
+3. Upload the CONTENTS of this folder, not the outer folder.
+4. Replace matching files when prompted.
+5. Commit directly to main with this message:
+   Cloudflare production cleanup and launch update
+6. Open Cloudflare Pages and confirm the newest deployment says Success.

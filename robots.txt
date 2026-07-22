@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
-Sitemap: https://jaharasadtherealtorandmortgageman.netlify.app/sitemap.xml
+
+Sitemap: https://jaharasad.com/sitemap.xml

@@ -1,9 +1,24 @@
-THIS PACKAGE RESTORES THE FULL HOMEPAGE AND KEEPS THE WORKING MASTERCLASS.
+TRMM WEBSITE — CLOUDFLARE LIVE PACKAGE
 
-Upload everything INSIDE this folder to the GitHub page where index.html appears.
-Choose Replace when GitHub asks about existing files, then Commit changes.
-Netlify should deploy automatically from the existing linked repository.
+This folder contains the cleaned production website for:
+Jahar Asad — The Realtor & Mortgage Man.
 
-After deployment test:
-https://jaharasadtherealtorandmortgageman.netlify.app/
-https://jaharasadtherealtorandmortgageman.netlify.app/homebuying-masterclass
+DEPLOYMENT FLOW
+GitHub main branch -> Cloudflare Pages -> JaharAsad.com
+
+UPLOAD
+Upload everything INSIDE this folder to the ROOT of the existing GitHub repository:
+jaharasad1-web/realtor-mortgage-authority-site
+
+Do not create a new repository.
+Commit the upload to the main branch. Cloudflare should deploy automatically from the connected repository.
+
+VERIFY AFTER DEPLOYMENT
+/
+/buy/
+/sell/
+/finance/
+/contact.html
+/homebuying-masterclass
+
+The old Netlify references and duplicate backup copies have been removed.

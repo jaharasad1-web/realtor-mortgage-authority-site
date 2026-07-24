@@ -1,0 +1,85 @@
+{
+  "publicationDate": "2026-07-24",
+  "rateAsOf": "2026-07-23",
+  "updatedTime": "8:30 AM ET",
+  "headline": "Mortgage rates remain elevated as bond yields stay near recent highs.",
+  "summary": "The latest national daily survey shows borrowing costs moved higher, while the 10-year Treasury yield remained near 4.7%. For buyers, the practical focus is monthly affordability, available inventory, and choosing a loan structure that fits the full financial picture.",
+  "rates": [
+    {
+      "program": "30-Year Fixed",
+      "rate": "6.85%",
+      "change": "+0.08",
+      "direction": "up"
+    },
+    {
+      "program": "15-Year Fixed",
+      "rate": "6.29%",
+      "change": "+0.06",
+      "direction": "up"
+    },
+    {
+      "program": "30-Year FHA",
+      "rate": "6.40%",
+      "change": "+0.05",
+      "direction": "up"
+    },
+    {
+      "program": "30-Year VA",
+      "rate": "6.42%",
+      "change": "+0.05",
+      "direction": "up"
+    },
+    {
+      "program": "30-Year Jumbo",
+      "rate": "6.92%",
+      "change": "+0.02",
+      "direction": "up"
+    },
+    {
+      "program": "7/6 SOFR ARM",
+      "rate": "6.55%",
+      "change": "0.00",
+      "direction": "flat"
+    }
+  ],
+  "marketIndicators": [
+    {
+      "label": "Freddie Mac weekly 30-year average",
+      "value": "6.58%",
+      "note": "As of July 23"
+    },
+    {
+      "label": "Freddie Mac weekly 15-year average",
+      "value": "5.96%",
+      "note": "As of July 23"
+    },
+    {
+      "label": "10-year Treasury yield",
+      "value": "4.69%",
+      "note": "July 24 market level"
+    }
+  ],
+  "buyerMessage": "A higher rate can reduce purchasing power, but rate alone should not decide whether a home fits your goals. Compare the payment, cash needed, property condition, taxes, insurance, and how long you expect to own the home.",
+  "sellerMessage": "Buyers are more payment-conscious in this environment. Accurate pricing, strong presentation, and realistic negotiation matter more than relying on urgency.",
+  "tipTitle": "Compare the full loan\u2014not only the rate",
+  "tipBody": "A lower advertised rate may involve discount points or higher lender costs. Review the interest rate, APR, points, lender credits, cash to close, and total payment together.",
+  "word": "Discount Point",
+  "wordDefinition": "A fee paid at closing to reduce the mortgage interest rate. One point generally equals 1% of the loan amount, but the rate reduction received varies by market and lender.",
+  "question": "Should I wait for mortgage rates to fall?",
+  "answer": "No one can reliably time the exact bottom. A better decision begins with whether the home, payment, cash requirement, and long-term plan work today. A future refinance may be possible, but it should never be treated as guaranteed.",
+  "insight": "Today\u2019s market rewards preparation more than prediction. Know your comfortable payment, understand the trade-offs among loan programs, and make the housing decision that fits your life\u2014not a headline.",
+  "sources": [
+    {
+      "name": "Mortgage News Daily \u2014 daily national index",
+      "url": "https://www.mortgagenewsdaily.com/mortgage-rates"
+    },
+    {
+      "name": "Freddie Mac Primary Mortgage Market Survey",
+      "url": "https://www.freddiemac.com/pmms"
+    },
+    {
+      "name": "U.S. 10-Year Treasury market reference",
+      "url": "https://tradingeconomics.com/united-states/government-bond-yield"
+    }
+  ]
+}

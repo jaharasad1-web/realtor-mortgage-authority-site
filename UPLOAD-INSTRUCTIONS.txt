@@ -1,1 +1,4 @@
-Upload index.html to the root of jaharasad1-web/realtor-mortgage-authority-site and replace the existing index.html. Do not upload the ZIP itself. Cloudflare should deploy automatically.
+1. Extract the ZIP.
+2. Open jaharasad1-web/realtor-mortgage-authority-site in GitHub.
+3. Upload index.html to the repository root and replace the existing index.html.
+4. Commit the change. Cloudflare should deploy automatically.

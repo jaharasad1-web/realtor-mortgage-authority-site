@@ -1,0 +1,19 @@
+TRMM Public Lead Engine v2
+
+DEPLOYMENT
+1. Extract this ZIP.
+2. Open GitHub repository jaharasad1-web/realtor-mortgage-authority-site.
+3. Upload ALL extracted files/folders into the repository root.
+4. Replace matching files and commit.
+5. Cloudflare Pages should deploy automatically.
+6. Test jaharasad.com with Ctrl+F5.
+
+WORKING LEAD ACTIONS
+- AI Pre-Approval: https://cutt.ly/onesolution
+- Home Search: https://jaharasad.epiquerealty.com/
+- New Construction: https://www.showingnew.com/jaharasad
+- MasterClass Registration: https://cutt.ly/jaharasadmasterclass
+- Phone: 919-200-3359
+
+NOTE
+Community Facebook URLs are intentionally not invented. The Communities page routes prospects to contact TRMM until official group URLs are created.

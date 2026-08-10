@@ -1,0 +1,8 @@
+TRMM Platform v4.0 deployment
+
+1. Extract this ZIP.
+2. Upload ALL extracted contents to the ROOT of jaharasad1-web/realtor-mortgage-authority-site.
+3. Replace matching files.
+4. Commit changes to main.
+5. Cloudflare Pages should redeploy automatically.
+6. Test https://jaharasad.com and https://jaharasad.com/about-trmm.html and https://jaharasad.com/start-your-journey.html

@@ -1,0 +1,50 @@
+TRMM CLOUD RELATIONSHIP CENTER — LEAD BRIDGE SETUP
+
+WHAT THIS PACKAGE DOES
+1. Facebook ad sends prospect to matching landing page.
+2. Prospect submits the form.
+3. Cloudflare Pages Function /api/lead validates the submission.
+4. It creates or updates the lead in Supabase table: families.
+5. It writes a website_lead event into: contact_timeline.
+6. Campaign source is preserved as First-Time Homebuyer or Down Payment Assistance.
+7. Spam controls: honeypot + minimum-submit-time + strict campaign/state validation.
+8. Supabase service-role key stays SERVER-SIDE only.
+
+FILES TO UPLOAD TO YOUR CLOUDFLARE PAGES GITHUB REPOSITORY ROOT
+- first-time-homebuyer.html
+- down-payment-assistance.html
+- assets/
+- functions/api/lead.js
+
+CLOUDFLARE PAGES SECRETS / VARIABLES
+Cloudflare Dashboard:
+Workers & Pages > your Pages project > Settings > Variables and Secrets
+
+Add:
+SUPABASE_URL = your existing TRMM CRM Supabase project URL
+SUPABASE_SERVICE_ROLE_KEY = your existing Supabase service_role key  [SECRET]
+Optional:
+ALLOWED_ORIGINS = comma-separated additional approved origins
+
+IMPORTANT
+Never place SUPABASE_SERVICE_ROLE_KEY inside HTML or browser JavaScript.
+It belongs only in the Cloudflare Pages secret.
+
+AFTER SAVING THE VARIABLES
+Redeploy the Pages project.
+
+TEST
+1. Open the First-Time Homebuyer page.
+2. Submit a test lead with your own email/phone.
+3. Confirm the relationship appears in TRMM Cloud Relationship Center.
+4. Confirm source = Website | Facebook | First-Time Homebuyer.
+5. Confirm contact_timeline has a website_lead event.
+6. Repeat on DPA page and confirm source = Website | Facebook | Down Payment Assistance.
+
+EXPECTED ENDPOINT
+https://jaharasad.com/api/lead
+
+NOTE ON DEPLOYMENT
+Cloudflare Pages Functions require the /functions directory in the Pages project source.
+If your current deployment is a dashboard Direct Upload rather than Git-based deployment,
+Functions are not supported by that method; deploy through the connected Git repository or Wrangler.

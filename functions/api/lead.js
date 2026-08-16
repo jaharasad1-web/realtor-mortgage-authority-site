@@ -1,0 +1,274 @@
+
+const ALLOWED_CAMPAIGNS = {
+  "first-time-homebuyer": {
+    label: "First-Time Homebuyer",
+    contactType: "buyer",
+    source: "Website | Facebook | First-Time Homebuyer"
+  },
+  "down-payment-assistance": {
+    label: "Down Payment Assistance",
+    contactType: "buyer",
+    source: "Website | Facebook | Down Payment Assistance"
+  }
+};
+
+const ALLOWED_STATES = new Set(["NC","SC","GA","IL","FL"]);
+
+function json(body, status = 200, extra = {}) {
+  return new Response(JSON.stringify(body), {
+    status,
+    headers: {
+      "content-type": "application/json; charset=utf-8",
+      "cache-control": "no-store",
+      ...extra
+    }
+  });
+}
+
+function cleanText(value, max = 250) {
+  if (typeof value !== "string") return "";
+  return value.trim().replace(/\s+/g, " ").slice(0, max);
+}
+
+function normalizePhone(value) {
+  const digits = String(value || "").replace(/\D/g, "");
+  if (digits.length === 11 && digits.startsWith("1")) return digits.slice(1);
+  return digits;
+}
+
+function normalizeEmail(value) {
+  return String(value || "").trim().toLowerCase();
+}
+
+function validEmail(value) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+}
+
+function validPhone(value) {
+  return /^\d{10}$/.test(value);
+}
+
+function allowedOrigin(request, env) {
+  const origin = request.headers.get("Origin");
+  if (!origin) return true;
+
+  const configured = cleanText(env.ALLOWED_ORIGINS || "", 1000)
+    .split(",")
+    .map(x => x.trim())
+    .filter(Boolean);
+
+  const defaults = [
+    "https://jaharasad.com",
+    "https://www.jaharasad.com"
+  ];
+
+  return [...defaults, ...configured].includes(origin);
+}
+
+async function supabaseFetch(env, path, init = {}) {
+  const url = `${env.SUPABASE_URL.replace(/\/$/, "")}/rest/v1/${path}`;
+  const headers = new Headers(init.headers || {});
+  headers.set("apikey", env.SUPABASE_SERVICE_ROLE_KEY);
+  headers.set("Authorization", `Bearer ${env.SUPABASE_SERVICE_ROLE_KEY}`);
+  headers.set("Content-Type", "application/json");
+  headers.set("Accept", "application/json");
+
+  const response = await fetch(url, { ...init, headers });
+
+  if (!response.ok) {
+    const text = await response.text();
+    throw new Error(`Supabase ${response.status}: ${text.slice(0, 500)}`);
+  }
+
+  const text = await response.text();
+  return text ? JSON.parse(text) : null;
+}
+
+async function findExistingFamily(env, email, phone) {
+  if (email) {
+    const rows = await supabaseFetch(
+      env,
+      `families?select=id,email,phone&email=eq.${encodeURIComponent(email)}&limit=1`
+    );
+    if (Array.isArray(rows) && rows[0]) return rows[0];
+  }
+
+  if (phone) {
+    // CRM import code stores phone values as strings. This checks the normalized value first.
+    const rows = await supabaseFetch(
+      env,
+      `families?select=id,email,phone&phone=eq.${encodeURIComponent(phone)}&limit=1`
+    );
+    if (Array.isArray(rows) && rows[0]) return rows[0];
+  }
+
+  return null;
+}
+
+export async function onRequestPost(context) {
+  const { request, env } = context;
+
+  if (!env.SUPABASE_URL || !env.SUPABASE_SERVICE_ROLE_KEY) {
+    return json({ ok: false, error: "Lead intake is not configured." }, 503);
+  }
+
+  if (!allowedOrigin(request, env)) {
+    return json({ ok: false, error: "Origin not allowed." }, 403);
+  }
+
+  let body;
+  try {
+    body = await request.json();
+  } catch {
+    return json({ ok: false, error: "Invalid request body." }, 400);
+  }
+
+  // Honeypot: humans never fill this hidden field.
+  if (cleanText(body.company, 100)) {
+    return json({ ok: true }, 200);
+  }
+
+  // Very fast submissions are usually bots. Do not reject when timing is absent.
+  const startedAt = Number(body.form_started_at || 0);
+  if (startedAt && Date.now() - startedAt < 1800) {
+    return json({ ok: false, error: "Please wait a moment and try again." }, 429);
+  }
+
+  const campaignKey = cleanText(body.campaign, 60);
+  const campaign = ALLOWED_CAMPAIGNS[campaignKey];
+  if (!campaign) {
+    return json({ ok: false, error: "Invalid campaign." }, 400);
+  }
+
+  const firstName = cleanText(body.first_name, 80);
+  const lastName = cleanText(body.last_name, 80);
+  const email = normalizeEmail(body.email);
+  const phone = normalizePhone(body.phone);
+  const state = cleanText(body.state, 2).toUpperCase();
+  const timeframe = cleanText(body.timeframe, 80);
+  const housingStatus = cleanText(body.housing_status, 80);
+  const preferredContact = cleanText(body.preferred_contact, 30);
+  const obstacle = cleanText(body.primary_obstacle, 160);
+  const pageUrl = cleanText(body.page_url, 500);
+  const fbclid = cleanText(body.fbclid, 250);
+  const utmSource = cleanText(body.utm_source, 100);
+  const utmCampaign = cleanText(body.utm_campaign, 150);
+  const consent = body.consent === true || body.consent === "true" || body.consent === "on";
+
+  const errors = {};
+  if (!firstName) errors.first_name = "First name is required.";
+  if (!lastName) errors.last_name = "Last name is required.";
+  if (!validEmail(email)) errors.email = "Enter a valid email address.";
+  if (!validPhone(phone)) errors.phone = "Enter a 10-digit mobile number.";
+  if (!ALLOWED_STATES.has(state)) errors.state = "Choose a licensed service state.";
+  if (!timeframe) errors.timeframe = "Choose a buying timeframe.";
+  if (!housingStatus) errors.housing_status = "Choose your current housing status.";
+  if (!preferredContact) errors.preferred_contact = "Choose how you prefer to be contacted.";
+  if (!consent) errors.consent = "Consent is required before submitting.";
+
+  if (Object.keys(errors).length) {
+    return json({ ok: false, error: "Please correct the highlighted fields.", fields: errors }, 422);
+  }
+
+  const notes = [
+    `Campaign: ${campaign.label}`,
+    `Buying timeframe: ${timeframe}`,
+    `Housing status: ${housingStatus}`,
+    `Preferred contact: ${preferredContact}`,
+    obstacle ? `Primary obstacle: ${obstacle}` : "",
+    utmSource ? `UTM source: ${utmSource}` : "",
+    utmCampaign ? `UTM campaign: ${utmCampaign}` : "",
+    fbclid ? `Facebook click ID: ${fbclid}` : "",
+    pageUrl ? `Landing page: ${pageUrl}` : ""
+  ].filter(Boolean).join("\n");
+
+  const payload = {
+    first_name: firstName,
+    last_name: lastName,
+    household_name: `${firstName} ${lastName}`.trim(),
+    email,
+    phone,
+    state,
+    contact_type: campaign.contactType,
+    relationship_status: "new",
+    email_marketing_consent: consent,
+    direct_mail_eligible: false,
+    do_not_mail: false,
+    source: campaign.source,
+    notes
+  };
+
+  try {
+    const existing = await findExistingFamily(env, email, phone);
+    let familyId;
+    let disposition;
+
+    if (existing?.id) {
+      familyId = existing.id;
+      disposition = "updated";
+      await supabaseFetch(
+        env,
+        `families?id=eq.${encodeURIComponent(familyId)}`,
+        {
+          method: "PATCH",
+          headers: { "Prefer": "return=minimal" },
+          body: JSON.stringify(payload)
+        }
+      );
+    } else {
+      disposition = "created";
+      const rows = await supabaseFetch(
+        env,
+        "families?select=id",
+        {
+          method: "POST",
+          headers: { "Prefer": "return=representation" },
+          body: JSON.stringify(payload)
+        }
+      );
+      familyId = Array.isArray(rows) ? rows[0]?.id : rows?.id;
+      if (!familyId) throw new Error("CRM record created but no family ID was returned.");
+    }
+
+    await supabaseFetch(
+      env,
+      "contact_timeline",
+      {
+        method: "POST",
+        headers: { "Prefer": "return=minimal" },
+        body: JSON.stringify({
+          family_id: familyId,
+          event_type: "website_lead",
+          title: `New ${campaign.label} lead`,
+          details: `Lead ${disposition} from landing page.\n${notes}`
+        })
+      }
+    );
+
+    return json({
+      ok: true,
+      message: "Thank you. Your information was received.",
+      disposition
+    });
+  } catch (error) {
+    console.error("Lead intake error:", error);
+    return json({
+      ok: false,
+      error: "We could not save your information right now. Please call 919-200-3359."
+    }, 500);
+  }
+}
+
+export async function onRequestOptions(context) {
+  if (!allowedOrigin(context.request, context.env)) {
+    return new Response(null, { status: 403 });
+  }
+  return new Response(null, {
+    status: 204,
+    headers: {
+      "Access-Control-Allow-Methods": "POST, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type",
+      "Access-Control-Max-Age": "86400"
+    }
+  });
+}

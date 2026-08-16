@@ -69,7 +69,6 @@ async function supabaseFetch(env, path, init = {}) {
   const url = `${env.SUPABASE_URL.replace(/\/$/, "")}/rest/v1/${path}`;
   const headers = new Headers(init.headers || {});
   headers.set("apikey", env.SUPABASE_SERVICE_ROLE_KEY);
-  headers.set("Authorization", `Bearer ${env.SUPABASE_SERVICE_ROLE_KEY}`);
   headers.set("Content-Type", "application/json");
   headers.set("Accept", "application/json");
 

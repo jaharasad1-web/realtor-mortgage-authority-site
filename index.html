@@ -1,41 +1,85 @@
-<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>TRMM Campaign Hub</title><style>
-:root{--navy:#0A1633;--slate:#4A627A;--soft:#DCE8F2;--light:#EEF5FA;--char:#2B2B2B;--black:#111820;--white:#FFFFFF;--muted:#667789}
-*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;color:var(--char);background:white}
-.hero{padding:72px 22px;background:linear-gradient(135deg,var(--navy),#182d50);color:white;text-align:center}
-.hero h1{font-size:clamp(38px,6vw,66px);line-height:1.02;margin:10px auto;max-width:980px}.hero p{font-size:20px;line-height:1.5;max-width:800px;margin:18px auto;color:var(--soft)}
-.wrap{max-width:1120px;margin:auto;padding:46px 22px}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
-.card{border:1px solid #c8d8e5;border-radius:20px;padding:25px;background:var(--light)}.card h2,.card h3{color:var(--navy)}
-.cta{background:var(--slate);color:white;padding:15px 20px;border-radius:11px;text-decoration:none;font-weight:800;display:inline-block}
-.band{background:var(--soft);padding:30px;border-radius:20px;margin:25px 0}.eyebrow{font-size:12px;font-weight:800;letter-spacing:1.6px;text-transform:uppercase}
-footer{background:var(--light);padding:30px 22px;font-size:13px;line-height:1.6}footer strong{color:var(--navy)}
-@media(max-width:760px){.grid{grid-template-columns:1fr}}
-</style></head><body>
-<section class="hero"><div class="eyebrow">THE REALTOR &amp; MORTGAGE MAN™</div><h1>WHAT ARE YOU TRYING TO ACCOMPLISH?</h1><p>Eight pathways. One connected real-estate and mortgage platform.</p></section><main class="wrap"><div class="grid"><div class="card"><h2>Rent vs. Own</h2><a class="cta" href="rent-vs-own.html">Explore</a></div><div class="card"><h2>Reverse / HECM</h2><a class="cta" href="retirement-housing.html">Explore</a></div><div class="card"><h2>First-Time Buyer / DPA</h2><a class="cta" href="first-time-homebuyers.html">Explore</a></div><div class="card"><h2>USDA / Manufactured</h2><a class="cta" href="usda-manufactured-homes.html">Explore</a></div><div class="card"><h2>Right-Size</h2><a class="cta" href="rightsize.html">Explore</a></div><div class="card"><h2>New Construction</h2><a class="cta" href="new-construction.html">Explore</a></div><div class="card"><h2>Condo Lookup</h2><a class="cta" href="condo-financing.html">Explore</a></div><div class="card"><h2>Beachfront Condos</h2><a class="cta" href="beachfront-condos.html">Explore</a></div></div></main>
-<section class="wrap" style="padding-top:10px">
-<div class="band">
-<h2 style="color:var(--navy);margin-top:0">Not Sure Where to Start?</h2>
-<p>Choose the goal that sounds most like you and the TRMM pathway finder will point you in the right direction.</p>
-<select id="goal" style="width:100%;max-width:650px;padding:14px;border:1px solid #c8d8e5;border-radius:10px;font-size:16px">
-<option value="">Choose my goal…</option>
-<option value="rent-vs-own.html">I rent and want to know if I can buy</option>
-<option value="first-time-homebuyers.html">I need help with down payment / first home</option>
-<option value="retirement-housing.html">I am 62+ and want to explore retirement housing</option>
-<option value="rightsize.html">I want a smaller or easier-to-maintain home</option>
-<option value="new-construction.html">I want a brand-new home</option>
-<option value="usda-manufactured-homes.html">I want USDA / manufactured-home options</option>
-<option value="condo-financing.html">I am considering a condo</option>
-<option value="beachfront-condos.html">I want a beachfront / coastal condo</option>
-</select>
-<button onclick="goGoal()" class="cta" style="border:0;margin-left:8px;cursor:pointer">Show My Path</button>
-</div></section>
-<script>function goGoal(){const v=document.getElementById('goal').value;if(v)location.href=v;}</script>
-<footer><div class="wrap" style="padding:0">
-<strong>Jahar Asad, BPA | The Realtor &amp; Mortgage Man™</strong><br>
-Realtor® | Mortgage Loan Officer — NMLS #2112298<br>
-Certified Reverse Mortgage Specialist (CREV) | Certified Down Payment Assistance Specialist | Certified Buyer Agent Expert (CBAE) | Strategic Pricing Agent (SPA)<br>
-<strong>Moselle Realty Group Powered By Epique Realty</strong><br>
-NC #278439 | SC #145471 | GA #449273 | IL #475.218308 | FL #BK3657435<br>
-<strong>Nexa Lending — NMLS #1660690</strong><br>
-919-200-3359 | JaharAsad.com<br>
-Equal Housing Opportunity | Equal Housing Lender
-</div></footer></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Jahar Asad | The Realtor & Mortgage Man™</title>
+<meta name="description" content="One Expert. One Solution.™ Buy • Sell • Finance with Jahar Asad, The Realtor & Mortgage Man™.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0A1633;--slate:#4A627A;--soft:#DCE8F2;--light:#EEF5FA;--char:#2B2B2B;--black:#111820;--white:#fff;--muted:#667789}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Lato,Arial,sans-serif;color:var(--char);background:#fff}a{text-decoration:none}.wrap{width:min(1500px,calc(100% - 48px));margin:auto}
+.top{background:var(--navy);color:#fff}.nav{min-height:88px;display:flex;align-items:center;gap:28px}.identity{margin-right:auto;color:#fff}.identity strong{font-family:"Playfair Display",serif;font-size:1.45rem;display:block}.identity span{font-size:.72rem;color:var(--soft);font-weight:900;letter-spacing:.08em}.navlinks{display:flex;gap:26px;align-items:center}.navlinks a{color:#fff;font-size:.82rem;font-weight:900}.phone{color:var(--soft)!important}.btn{display:inline-flex;align-items:center;justify-content:center;border-radius:10px;padding:14px 22px;font-weight:900}.btn-primary{background:var(--navy);color:#fff}.btn-secondary{background:#fff;color:var(--slate);border:2px solid var(--slate)}.btn-nav{background:var(--slate);color:#fff!important}
+.hero{background:var(--light)}.hero-grid{display:grid;grid-template-columns:1.18fr .98fr .82fr;gap:28px;align-items:center;padding:28px 0 34px;min-height:510px}.copy h1{font-family:"Playfair Display",serif;color:var(--navy);font-size:clamp(3rem,4.4vw,5rem);line-height:.96;margin:0 0 26px}.copy h2{font-size:clamp(1.55rem,2.4vw,2.5rem);color:var(--slate);margin:0 0 28px}.copy .mission{font-size:1.4rem;color:var(--navy);font-weight:900;line-height:1.35}.copy p{max-width:620px}.actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:28px}
+.family-frame{min-width:0}.family-frame img{width:100%;max-height:430px;object-fit:contain;display:block;border-radius:18px;border:2px solid var(--soft);background:var(--light)}.family-caption{text-align:center;color:var(--navy);font-weight:900;font-size:.9rem;margin-top:12px}
+.profile{background:var(--navy);color:#fff;border-radius:22px;padding:24px;min-width:0}.profile-top{display:grid;grid-template-columns:140px 1fr;gap:18px;align-items:start}.profile-photo{width:140px;height:168px;object-fit:contain;background:var(--black);border-radius:14px}.profile h3{font-family:"Playfair Display",serif;font-size:1.35rem;margin:8px 0 8px}.profile .brandline{color:var(--soft);font-weight:900;font-size:.9rem;line-height:1.4}.profile .roles{font-size:.82rem;line-height:1.75;margin-top:14px}.divider{height:2px;background:var(--slate);margin:20px 0}.profile-bottom{display:grid;grid-template-columns:1fr 104px;gap:18px;align-items:start}.tagline{font-weight:900;margin-bottom:8px}.profile a{color:#fff}.profile .site{color:var(--soft);font-weight:900}.qr{background:#fff;padding:7px;border-radius:8px;width:104px;height:104px;object-fit:contain}.scan{text-align:center;color:var(--soft);font-size:.64rem;font-weight:900;margin-top:7px}.certs{color:var(--soft);font-size:.72rem;font-weight:900;margin-top:20px}
+.centers{padding:42px 0 26px}.centers h2{font-family:"Playfair Display",serif;color:var(--navy);font-size:2.25rem;margin:0 0 8px}.centers>div>p{color:var(--muted);margin:0 0 28px}.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}.card{background:var(--light);border:2px solid var(--soft);border-radius:18px;padding:25px}.card h3{color:var(--navy);margin:0 0 12px;font-size:1.05rem}.card p{margin:0 0 15px;font-size:.9rem}.card a{color:var(--slate);font-weight:900;font-size:.8rem}
+.footer{background:var(--navy);color:#fff;padding:30px 0}.footer-grid{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:30px;align-items:center}.logo-strip{width:100%;max-height:108px;object-fit:contain;object-position:left center}.footer-info strong{display:block}.footer-info span{display:block;color:var(--soft);font-size:.82rem;margin-top:7px}
+@media(max-width:1150px){.hero-grid{grid-template-columns:1fr 1fr}.profile{grid-column:1/-1}.profile-top{grid-template-columns:120px 1fr}.cards{grid-template-columns:repeat(2,1fr)}.navlinks a:not(.phone):not(.btn-nav){display:none}}
+@media(max-width:760px){.wrap{width:min(100% - 28px,1500px)}.nav{min-height:74px}.identity strong{font-size:1.1rem}.identity span{font-size:.6rem}.phone{display:none}.btn-nav{padding:10px 12px;font-size:.7rem!important}.hero-grid{grid-template-columns:1fr;padding-top:34px}.copy h1{font-size:3.15rem}.family-frame img{max-height:none}.profile{grid-column:auto}.profile-top{grid-template-columns:105px 1fr}.profile-photo{width:105px;height:132px}.profile-bottom{grid-template-columns:1fr 90px}.qr{width:90px;height:90px}.cards{grid-template-columns:1fr}.footer-grid{grid-template-columns:1fr}.footer-info{font-size:.9rem}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap nav">
+    <a class="identity" href="/"><strong>JAHAR ASAD</strong><span>THE REALTOR &amp; MORTGAGE MAN™</span></a>
+    <nav class="navlinks" aria-label="Main navigation">
+      <a href="/">HOME</a><a href="#centers">CENTERS OF EXCELLENCE</a><a href="homebuying-masterclass.html">MASTERCLASSES</a><a href="resources/index.html">RESOURCES</a><a href="about.html">ABOUT</a>
+      <a class="phone" href="tel:19192003359">919-200-3359</a><a class="btn btn-nav" href="contact.html">SCHEDULE A CONSULTATION</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+ <div class="wrap hero-grid">
+  <div class="copy">
+   <h1>ONE EXPERT.<br>ONE SOLUTION.</h1>
+   <h2>BUY • SELL • FINANCE.</h2>
+   <p class="mission">Creating Economic Dignity<br>Through Homeownership.</p>
+   <p>Real estate and mortgage guidance under one trusted brand.</p>
+   <div class="actions"><a class="btn btn-primary" href="https://cutt.ly/onesolution">START MY JOURNEY</a><a class="btn btn-secondary" href="#centers">EXPLORE SERVICES</a></div>
+  </div>
+
+  <div class="family-frame">
+    <img src="assets/approved-family.jpg" alt="African American family of four at home">
+    <div class="family-caption">Real estate + mortgage guidance under one trusted brand.</div>
+  </div>
+
+  <aside class="profile">
+    <div class="profile-top">
+      <img class="profile-photo" src="assets/jahar-asad-profile.png" alt="Jahar Asad">
+      <div><h3>JAHAR ASAD, BPA</h3><div class="brandline">The Realtor &amp;<br>Mortgage Man™</div><div class="roles">Realtor®<br>Mortgage Loan Officer<br>NMLS #2112298</div></div>
+    </div>
+    <div class="divider"></div>
+    <div class="profile-bottom">
+      <div><div class="tagline">ONE EXPERT. ONE SOLUTION.™</div><div style="color:var(--soft);margin-bottom:22px">Buy • Sell • Finance</div><a href="tel:19192003359"><strong>919-200-3359</strong></a><br><a class="site" href="https://jaharasad.com">JaharAsad.com</a></div>
+      <div><img class="qr" src="assets/jaharasad-qr.png" alt="QR code for JaharAsad.com"><div class="scan">SCAN TO CONNECT</div></div>
+    </div>
+    <div class="certs">DPA • CREV • CBAE • SPA</div>
+  </aside>
+ </div>
+</section>
+
+<section class="centers" id="centers">
+ <div class="wrap">
+  <h2>CENTERS OF EXCELLENCE</h2><p>Solutions for every stage of homeownership.</p>
+  <div class="cards">
+   <article class="card"><h3>FIRST-TIME HOMEBUYERS</h3><p>Start with confidence.</p><a href="buy/index.html">LEARN MORE →</a></article>
+   <article class="card"><h3>DOWN PAYMENT ASSISTANCE</h3><p>Explore available paths.</p><a href="finance/index.html">LEARN MORE →</a></article>
+   <article class="card"><h3>NEW CONSTRUCTION</h3><p>Build with a plan.</p><a href="https://www.showingnew.com/jaharasad">LEARN MORE →</a></article>
+   <article class="card"><h3>REVERSE MORTGAGE &amp; HECM PURCHASE</h3><p>Use equity strategically.</p><a href="retirement/index.html">LEARN MORE →</a></article>
+  </div>
+ </div>
+</section>
+</main>
+
+<footer class="footer">
+ <div class="wrap footer-grid">
+   <img class="logo-strip" src="assets/trmm-locked-logo-strip.png" alt="TRMM professional brand and housing logo strip">
+   <div class="footer-info"><strong>Jahar Asad, BPA</strong><span>The Realtor &amp; Mortgage Man™</span><span>919-200-3359 | JaharAsad.com</span><span>Creating Economic Dignity Through Homeownership.</span></div>
+ </div>
+</footer>
+</body></html>

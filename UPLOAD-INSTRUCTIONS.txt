@@ -1,4 +1,6 @@
-1. Extract the ZIP.
-2. Open jaharasad1-web/realtor-mortgage-authority-site in GitHub.
-3. Upload index.html to the repository root and replace the existing index.html.
-4. Commit the change. Cloudflare should deploy automatically.
+TRMM HOMEPAGE PRODUCTION BUILD
+1. Inspect index.html locally first.
+2. Upload the CONTENTS of this folder to the root of the Cloudflare Pages project/repository.
+3. Keep the assets folder beside index.html.
+4. This package replaces the homepage only; it does not include or delete the rest of the existing site.
+5. The design uses the approved blue palette only; no gold UI colors are defined.

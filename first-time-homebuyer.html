@@ -1,23 +1,673 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>First-Time Homebuyer | Jahar Asad</title><meta name="description" content="First-time homebuyer education, financing options, DPA and direct strategy support."><style>
-:root{--navy:#0A1633;--slate:#4A627A;--soft:#DCE8F2;--light:#EEF5FA;--char:#2B2B2B;--near:#111820;--white:#fff;--muted:#667789}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--char);line-height:1.6;background:#fff}.wrap{width:min(1120px,92%);margin:auto}.top{background:var(--navy);color:#fff;padding:18px 0}.topin{display:flex;justify-content:space-between;align-items:center;gap:20px}.brand{font-weight:900;font-size:1.15rem}.top a{color:#fff;font-weight:800}.hero{background:linear-gradient(135deg,var(--navy),#162e55);color:#fff;padding:72px 0}.hero-grid{display:grid;grid-template-columns:1.12fr .88fr;gap:36px;align-items:center}.eyebrow{color:var(--soft);font-weight:900;text-transform:uppercase;letter-spacing:.1em}.hero h1{font-size:clamp(2.5rem,6vw,5rem);line-height:1;margin:.2em 0}.hero p{font-size:1.16rem;max-width:700px}.btn{display:inline-block;background:var(--slate);color:#fff;text-decoration:none;font-weight:900;padding:15px 20px;border-radius:10px;margin:8px 8px 0 0}.btn.light{background:#fff;color:var(--navy)}.section{padding:60px 0}.section.alt{background:var(--light)}h2{font-size:clamp(2rem,4vw,3rem);line-height:1.12;color:var(--navy);margin:0 0 16px}.lead{font-size:1.08rem;color:var(--muted);max-width:850px}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:28px}.card{background:#fff;border:1px solid var(--soft);border-radius:16px;padding:24px}.card h3{color:var(--navy);margin-top:0}.form-card{background:#fff;color:var(--char);border-radius:20px;padding:28px;box-shadow:0 14px 35px rgba(0,0,0,.2)}.form-card h2{font-size:1.8rem}.field-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.full{grid-column:1/-1}label{font-weight:800;color:var(--navy);display:block;margin-bottom:5px}input,select,textarea{width:100%;font:inherit;padding:13px;border:1px solid #b8c7d4;border-radius:9px;background:#fff;color:#111}textarea{min-height:90px}.submit{width:100%;border:0;background:var(--navy);color:#fff;font-weight:900;font-size:1rem;padding:15px;border-radius:10px;cursor:pointer}.consent{display:flex;gap:10px;align-items:flex-start}.consent input{width:auto;margin-top:6px}.status{min-height:28px;font-weight:800;margin-top:10px}.hp{position:absolute;left:-9999px}.campaign-creative{width:100%;display:block;border-radius:16px;border:1px solid var(--soft)}.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.step{background:var(--navy);color:#fff;padding:24px;border-radius:15px}.footer{background:var(--near);color:#fff;padding:30px 0;font-size:.88rem}.footer a{color:#fff}.small{font-size:.8rem;color:var(--soft);margin-top:10px}.skip{position:absolute;left:-9999px;top:auto}.skip:focus{left:12px;top:12px;background:#fff;color:#000;padding:10px;z-index:99}
-@media(max-width:850px){.hero-grid,.cards,.steps,.field-grid{grid-template-columns:1fr}.full{grid-column:auto}.hero{padding:50px 0}.form-card{padding:22px}}
-</style></head><body><a class="skip" href="#main">Skip to main content</a><header class="top"><div class="wrap topin"><div class="brand">JAHAR ASAD, BPA | THE REALTOR &amp; MORTGAGE MAN™</div><a href="tel:9192003359">919-200-3359</a></div></header><main id="main"><section class="hero"><div class="wrap hero-grid"><div><div class="eyebrow">First-Time Homebuyer</div><h1>Your First Home May Be Closer Than You Think.</h1><p>Low-down-payment options, first-time buyer programs, local real estate guidance and mortgage strategy—coordinated in one place.</p><a class="btn light" href="#lead-form-card">GET STARTED</a><a class="btn" href="/campaigns/">VIEW CAMPAIGN HUB</a></div><div class="form-card" id="lead-form-card"><h2>Build My First-Home Plan</h2><p>Complete this short form and your inquiry will be routed directly into the TRMM follow-up system.</p>
-<form id="lead-form" novalidate>
-<input type="hidden" name="campaign" value="first-time-homebuyer"><input type="hidden" id="form_started_at" name="form_started_at"><input type="hidden" id="page_url" name="page_url"><input type="hidden" id="utm_source" name="utm_source"><input type="hidden" id="utm_campaign" name="utm_campaign"><input type="hidden" id="fbclid" name="fbclid"><label class="hp">Company<input name="company" tabindex="-1" autocomplete="off"></label>
-<div class="field-grid"><div><label for="first_name">First name</label><input id="first_name" name="first_name" autocomplete="given-name" required></div><div><label for="last_name">Last name</label><input id="last_name" name="last_name" autocomplete="family-name" required></div><div><label for="email">Email</label><input id="email" type="email" name="email" autocomplete="email" required></div><div><label for="phone">Mobile phone</label><input id="phone" type="tel" name="phone" autocomplete="tel" inputmode="tel" required></div><div><label for="state">State</label><select id="state" name="state" required><option value="">Choose</option><option>NC</option><option>SC</option><option>GA</option><option>IL</option><option>FL</option></select></div><div><label for="timeframe">When are you hoping to move?</label><select id="timeframe" name="timeframe" required><option value="">Choose</option><option>Within 90 days</option><option>3–6 months</option><option>6–12 months</option><option>More than 12 months</option><option>Just researching</option></select></div><div><label for="housing_status">Current housing</label><select id="housing_status" name="housing_status" required><option value="">Choose</option><option>Renting</option><option>Own with mortgage</option><option>Own free and clear</option><option>Living with family / other</option></select></div><div><label for="preferred_contact">Preferred contact</label><select id="preferred_contact" name="preferred_contact" required><option value="">Choose</option><option>Phone</option><option>Text</option><option>Email</option></select></div><div class="full"><label for="primary_obstacle">What would you most like help understanding?</label><textarea id="primary_obstacle" name="primary_obstacle"></textarea></div><div class="full consent"><input id="consent" name="consent" type="checkbox" required><label for="consent">I agree to be contacted by Jahar Asad / TRMM regarding my inquiry. Message/data rates may apply.</label></div><div class="full"><button class="submit" type="submit">SEND MY REQUEST</button><div id="form-status" class="status" role="status" aria-live="polite"></div></div></div></form></div></div></section><section class="section"><div class="wrap"><h2>What This Path Can Help You Understand</h2><div class="cards"><div class="card"><h3>Know Your Numbers</h3><p>Review payment comfort, credit, cash needed, closing costs and reserves.</p></div><div class="card"><h3>Explore Financing</h3><p>Compare FHA, Conventional, VA, USDA and other eligible financing paths.</p></div><div class="card"><h3>Find Assistance</h3><p>Explore down payment and closing-cost assistance that may fit your transaction.</p></div></div></div></section><section class="section alt"><div class="wrap"><h2>From Plan to Keys</h2><div class="steps"><div class="step"><strong>1. Prepare</strong><br>Organize credit, income, assets, debts and budget.</div><div class="step"><strong>2. Finance</strong><br>Build a preapproval and cash-to-close strategy.</div><div class="step"><strong>3. Purchase</strong><br>Search, offer, inspect, appraise, underwrite and close.</div></div><p><a class="btn" href="/homebuying-masterclass.html">FREE HOMEBUYING 101™ MASTERCLASS</a></p></div></section></main><footer class="footer"><div class="wrap"><strong>Jahar Asad, BPA | The Realtor &amp; Mortgage Man™</strong><br>Realtor® | Mortgage Loan Officer — NMLS #2112298 | Certified Reverse Mortgage Specialist (CREV) | Certified Down Payment Assistance Specialist | Certified Buyer Agent Expert (CBAE) | Strategic Pricing Agent (SPA)<br>Moselle Realty Group Powered By Epique Realty | Nexa Lending — NMLS #1660690<br>Real Estate: NC #278439 | SC #145471 | GA #449273 | IL #475.218308 | FL #BK3657435<br>919-200-3359 | JaharAsad.com<div class="small">Program availability, eligibility, rates and terms vary. This page is educational and is not a commitment to lend. Equal Housing Opportunity | Equal Housing Lender.</div></div></footer>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>First-Time Homebuyer | Jahar Asad</title>
+
+<style>
+:root{
+  --navy:#0A1633;
+  --slate:#4A627A;
+  --soft:#DCE8F2;
+  --light:#EEF5FA;
+  --char:#2B2B2B;
+  --near:#111820;
+  --muted:#667789;
+  --white:#fff;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  color:var(--char);
+  background:#fff;
+  line-height:1.5;
+}
+
+a{color:inherit}
+
+.wrap{
+  width:min(1180px,92%);
+  margin:auto;
+}
+
+.top{
+  background:var(--navy);
+  color:#fff;
+  padding:17px 0;
+  position:sticky;
+  top:0;
+  z-index:5;
+}
+
+.topin{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+}
+
+.brand{
+  font-weight:900;
+  letter-spacing:.02em;
+}
+
+.brand small{
+  display:block;
+  color:var(--soft);
+  font-size:.72rem;
+  letter-spacing:.07em;
+}
+
+.phone{
+  font-weight:900;
+  text-decoration:none;
+}
+
+.hero{
+  background:var(--light);
+  padding:36px 0 42px;
+}
+
+.hero-grid{
+  display:grid;
+  grid-template-columns:minmax(0,1.35fr) minmax(320px,.65fr);
+  gap:26px;
+  align-items:start;
+}
+
+.campaign-art{
+  background:#fff;
+  border:1px solid var(--soft);
+  border-radius:18px;
+  overflow:hidden;
+  box-shadow:0 12px 32px rgba(10,22,51,.08);
+}
+
+.campaign-art img{
+  width:100%;
+  height:auto;
+  display:block;
+}
+
+.form-card{
+  background:#fff;
+  border:1px solid #cad8e4;
+  border-radius:18px;
+  padding:26px;
+  box-shadow:0 12px 32px rgba(10,22,51,.08);
+  position:sticky;
+  top:92px;
+}
+
+.kicker{
+  font-size:.78rem;
+  font-weight:900;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+  color:var(--slate);
+}
+
+.form-card h1{
+  font-size:clamp(2rem,3.2vw,3rem);
+  line-height:1.02;
+  color:var(--navy);
+  margin:8px 0 10px;
+}
+
+.form-card p{
+  margin:0 0 20px;
+  color:var(--muted);
+}
+
+.grid2{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+.field{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  margin-bottom:12px;
+}
+
+label{
+  font-weight:800;
+  color:var(--navy);
+  font-size:.92rem;
+}
+
+input,
+select,
+textarea{
+  width:100%;
+  padding:13px;
+  border:1px solid #b8c9d7;
+  border-radius:9px;
+  font:inherit;
+  background:#fff;
+}
+
+textarea{
+  min-height:88px;
+  resize:vertical;
+}
+
+.full{
+  grid-column:1/-1;
+}
+
+.consent{
+  display:flex;
+  gap:9px;
+  align-items:flex-start;
+  font-size:.84rem;
+  color:var(--muted);
+  margin:8px 0 15px;
+}
+
+.consent input{
+  width:auto;
+  margin-top:4px;
+}
+
+.submit{
+  width:100%;
+  border:0;
+  border-radius:10px;
+  padding:15px 18px;
+  background:var(--slate);
+  color:#fff;
+  font-weight:900;
+  font-size:1rem;
+  cursor:pointer;
+}
+
+.status{
+  margin-top:12px;
+  font-weight:800;
+  min-height:24px;
+}
+
+.privacy{
+  font-size:.78rem;
+  color:var(--muted);
+  margin-top:10px;
+}
+
+.section{
+  padding:58px 0;
+}
+
+.section.alt{
+  background:var(--light);
+}
+
+.section h2{
+  color:var(--navy);
+  font-size:clamp(1.8rem,3vw,2.7rem);
+  line-height:1.08;
+  margin:0 0 14px;
+}
+
+.cards{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+}
+
+.card{
+  border:1px solid var(--soft);
+  border-radius:14px;
+  padding:22px;
+  background:#fff;
+}
+
+.card h3{
+  color:var(--navy);
+  margin:0 0 8px;
+}
+
+.profile{
+  background:var(--navy);
+  color:#fff;
+  padding:44px 0;
+}
+
+.profile-grid{
+  display:grid;
+  grid-template-columns:190px 1fr;
+  gap:28px;
+  align-items:center;
+}
+
+.profile img{
+  width:190px;
+  border-radius:14px;
+  display:block;
+}
+
+.profile h2{
+  color:#fff;
+  margin-bottom:6px;
+}
+
+.profile .sub{
+  color:var(--soft);
+  font-weight:800;
+}
+
+.profile p{
+  margin:.4em 0;
+}
+
+.footer{
+  background:var(--near);
+  color:#fff;
+  padding:25px 0;
+  font-size:.82rem;
+}
+
+.footer .small{
+  color:var(--soft);
+  margin-top:7px;
+}
+
+.skip{
+  position:absolute;
+  left:-9999px;
+}
+
+.skip:focus{
+  left:10px;
+  top:10px;
+  background:#fff;
+  color:#000;
+  padding:10px;
+  z-index:99;
+}
+
+@media(max-width:900px){
+  .hero-grid,
+  .profile-grid,
+  .cards{
+    grid-template-columns:1fr;
+  }
+
+  .form-card{
+    position:static;
+  }
+
+  .grid2{
+    grid-template-columns:1fr;
+  }
+
+  .profile img{
+    width:160px;
+  }
+
+  .top{
+    position:static;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<a class="skip" href="#main">Skip to main content</a>
+
+<header class="top">
+  <div class="wrap topin">
+    <div class="brand">
+      JAHAR ASAD, BPA
+      <small>THE REALTOR &amp; MORTGAGE MAN™ • ONE EXPERT. ONE SOLUTION.™</small>
+    </div>
+    <a class="phone" href="tel:9192003359">919-200-3359</a>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="hero">
+  <div class="wrap hero-grid">
+
+    <div class="campaign-art">
+      <img
+        src="assets/first-time-approved-hero.png"
+        alt="First-Time Homebuyer approved campaign artwork">
+    </div>
+
+    <div class="form-card">
+
+      <div class="kicker">Get Your Personalized Plan</div>
+
+      <h1>Your First Home May Be Closer Than You Think</h1>
+
+      <p>
+        Tell me where you are today and I’ll help you build a clear
+        homebuying plan.
+      </p>
+
+      <form data-lead-form>
+
+        <input type="hidden" name="campaign" value="first-time-homebuyer">
+        <input type="hidden" name="form_started_at">
+        <input type="hidden" name="utm_source">
+        <input type="hidden" name="utm_campaign">
+        <input type="hidden" name="fbclid">
+        <input type="hidden" name="page_url">
+
+        <input
+          type="text"
+          name="company"
+          tabindex="-1"
+          autocomplete="off"
+          style="position:absolute;left:-9999px"
+          aria-hidden="true">
+
+        <div class="grid2">
+
+          <div class="field">
+            <label>
+              First name
+              <input name="first_name" autocomplete="given-name" required>
+            </label>
+          </div>
+
+          <div class="field">
+            <label>
+              Last name
+              <input name="last_name" autocomplete="family-name" required>
+            </label>
+          </div>
+
+          <div class="field">
+            <label>
+              Email
+              <input
+                name="email"
+                type="email"
+                autocomplete="email"
+                required>
+            </label>
+          </div>
+
+          <div class="field">
+            <label>
+              Mobile phone
+              <input
+                name="phone"
+                inputmode="tel"
+                autocomplete="tel"
+                required>
+            </label>
+          </div>
+
+          <div class="field">
+            <label>
+              State
+              <select name="state" required>
+                <option value="">Choose</option>
+                <option>NC</option>
+                <option>SC</option>
+                <option>GA</option>
+                <option>IL</option>
+                <option>FL</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="field">
+            <label>
+              Timeframe
+              <select name="timeframe" required>
+                <option value="">Choose</option>
+                <option>0–3 months</option>
+                <option>3–6 months</option>
+                <option>6–12 months</option>
+                <option>12+ months</option>
+                <option>Just researching</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="field">
+            <label>
+              Current housing status
+              <select name="housing_status" required>
+                <option value="">Choose</option>
+                <option value="Renting">Renting</option>
+                <option value="Living with family">Living with family</option>
+                <option value="Own a home">Own a home</option>
+                <option value="Other">Other</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="field">
+            <label>
+              Preferred contact
+              <select name="preferred_contact" required>
+                <option value="">Choose</option>
+                <option>Phone</option>
+                <option>Text</option>
+                <option>Email</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="field full">
+            <label>
+              What is the biggest question or obstacle you want help with?
+              <textarea name="primary_obstacle"></textarea>
+            </label>
+          </div>
+
+        </div>
+
+        <label class="consent">
+          <input type="checkbox" name="consent" required>
+          <span>
+            I agree that Jahar Asad / The Realtor &amp; Mortgage Man™
+            may contact me about my request. Message and data rates may apply.
+          </span>
+        </label>
+
+        <button class="submit" type="submit">
+          SEND MY REQUEST
+        </button>
+
+        <div class="status" role="status" aria-live="polite"></div>
+
+        <div class="privacy">
+          Your information is used to respond to your request and is not sold.
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+</section>
+
+<section class="section alt">
+  <div class="wrap">
+
+    <h2>Your First-Time Homebuyer Path</h2>
+
+    <div class="cards">
+
+      <div class="card">
+        <h3>Know Your Numbers</h3>
+        <p>
+          Review affordability, payment goals, credit considerations
+          and cash needed.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Explore Financing</h3>
+        <p>
+          Compare FHA, Conventional, VA, USDA and other eligible options.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Check DPA Options</h3>
+        <p>
+          Find out whether down payment or closing-cost assistance
+          may fit your situation.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<section class="profile">
+
+  <div class="wrap profile-grid">
+
+    <img
+      src="assets/jahar-profile.png"
+      alt="Jahar Asad, BPA">
+
+    <div>
+
+      <h2>Jahar Asad, BPA</h2>
+
+      <div class="sub">
+        The Realtor &amp; Mortgage Man™
+      </div>
+
+      <p>
+        Realtor® | Mortgage Loan Officer — NMLS #2112298
+      </p>
+
+      <p>
+        Certified Reverse Mortgage Specialist (CREV) |
+        Certified Down Payment Assistance Specialist |
+        Certified Buyer Agent Expert (CBAE) |
+        Strategic Pricing Agent (SPA)
+      </p>
+
+      <p>
+        <strong>919-200-3359</strong>
+        •
+        <strong>JaharAsad.com</strong>
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+</main>
+
+<footer class="footer">
+
+  <div class="wrap">
+
+    Nexa Lending — NMLS #1660690 |
+    Equal Housing Lender |
+    Moselle Realty Group Powered By Epique Realty
+
+    <br>
+
+    Real Estate:
+    NC #278439 |
+    SC #145471 |
+    GA #449273 |
+    IL #475.218308 |
+    FL #BK3657435
+
+    <div class="small">
+      Program availability, eligibility, rates and terms vary.
+      Educational information only.
+      Not a commitment to lend.
+    </div>
+
+  </div>
+
+</footer>
+
 <script>
-(function(){
- const form=document.getElementById('lead-form'); if(!form)return;
- document.getElementById('form_started_at').value=Date.now();
- const qs=new URLSearchParams(location.search);
- ['utm_source','utm_campaign','fbclid'].forEach(k=>{const el=document.getElementById(k); if(el) el.value=qs.get(k)||'';});
- document.getElementById('page_url').value=location.href;
- form.addEventListener('submit',async e=>{
-   e.preventDefault(); const status=document.getElementById('form-status'); status.textContent='Sending…';
-   const fd=new FormData(form); const body=Object.fromEntries(fd.entries()); body.consent=form.consent.checked;
-   try{ const r=await fetch('/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}); const j=await r.json(); if(!r.ok) throw new Error(j.error||'Please review the form.'); status.textContent='Thank you. Your information was received. Jahar will follow up with you.'; form.reset(); }
-   catch(err){ status.textContent=(err.message||'We could not save your information right now.')+' You may also call 919-200-3359.'; }
- });
+(() => {
+
+  const f = document.querySelector('[data-lead-form]');
+
+  if (!f) return;
+
+  const status = f.querySelector('.status');
+
+  f.querySelector('[name=form_started_at]').value = Date.now();
+
+  const qs = new URLSearchParams(location.search);
+
+  ['utm_source','utm_campaign','fbclid'].forEach(k => {
+    const el = f.querySelector(`[name=${k}]`);
+    if (el) el.value = qs.get(k) || '';
+  });
+
+  f.querySelector('[name=page_url]').value = location.href;
+
+  f.addEventListener('submit', async e => {
+
+    e.preventDefault();
+
+    status.textContent = 'Sending your information…';
+
+    const fd = new FormData(f);
+    const payload = {};
+
+    for (const [k,v] of fd.entries()) {
+      payload[k] = v;
+    }
+
+    payload.consent =
+      f.querySelector('[name=consent]').checked;
+
+    try {
+
+      const r = await fetch('/api/lead', {
+        method:'POST',
+        headers:{
+          'content-type':'application/json'
+        },
+        body:JSON.stringify(payload)
+      });
+
+      const j = await r.json();
+
+      if (!r.ok) {
+        throw new Error(j.error || 'Unable to submit.');
+      }
+
+      status.textContent =
+        'Thank you. Your information was received.';
+
+      f.reset();
+
+    } catch(err) {
+
+      status.textContent =
+        (err.message || 'Unable to submit.') +
+        ' You can also call 919-200-3359.';
+
+    }
+
+  });
+
 })();
-</script></body></html>
+</script>
+
+</body>
+</html>

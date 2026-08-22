@@ -9,6 +9,11 @@ const ALLOWED_CAMPAIGNS = {
     label: "Down Payment Assistance",
     contactType: "buyer",
     source: "Website | Facebook | Down Payment Assistance"
+  },
+  "reverse-mortgage": {
+    label: "Reverse Mortgage / HECM",
+    contactType: "buyer",
+    source: "Website | Facebook | Reverse Mortgage"
   }
 };
 

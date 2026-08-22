@@ -3,9 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+
 <title>First-Time Homebuyer | Jahar Asad</title>
 
+<meta
+  name="description"
+  content="First-time homebuyer education, financing options, down payment assistance and direct strategy support from Jahar Asad, The Realtor & Mortgage Man™."
+>
+
 <style>
+
 :root{
   --navy:#0A1633;
   --slate:#4A627A;
@@ -14,10 +21,16 @@
   --char:#2B2B2B;
   --near:#111820;
   --muted:#667789;
-  --white:#fff;
+  --white:#FFFFFF;
 }
 
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
 
 body{
   margin:0;
@@ -27,12 +40,16 @@ body{
   line-height:1.5;
 }
 
-a{color:inherit}
+a{
+  color:inherit;
+}
 
 .wrap{
   width:min(1180px,92%);
   margin:auto;
 }
+
+/* HEADER */
 
 .top{
   background:var(--navy);
@@ -67,6 +84,8 @@ a{color:inherit}
   text-decoration:none;
 }
 
+/* HERO */
+
 .hero{
   background:var(--light);
   padding:36px 0 42px;
@@ -78,6 +97,8 @@ a{color:inherit}
   gap:26px;
   align-items:start;
 }
+
+/* APPROVED CAMPAIGN ART */
 
 .campaign-art{
   background:#fff;
@@ -92,6 +113,8 @@ a{color:inherit}
   height:auto;
   display:block;
 }
+
+/* LEAD FORM */
 
 .form-card{
   background:#fff;
@@ -188,6 +211,10 @@ textarea{
   cursor:pointer;
 }
 
+.submit:hover{
+  background:var(--navy);
+}
+
 .status{
   margin-top:12px;
   font-weight:800;
@@ -199,6 +226,8 @@ textarea{
   color:var(--muted);
   margin-top:10px;
 }
+
+/* CONTENT */
 
 .section{
   padding:58px 0;
@@ -213,6 +242,12 @@ textarea{
   font-size:clamp(1.8rem,3vw,2.7rem);
   line-height:1.08;
   margin:0 0 14px;
+}
+
+.section-intro{
+  max-width:800px;
+  color:var(--muted);
+  margin:0 0 28px;
 }
 
 .cards{
@@ -233,6 +268,8 @@ textarea{
   margin:0 0 8px;
 }
 
+/* PROFILE */
+
 .profile{
   background:var(--navy);
   color:#fff;
@@ -248,13 +285,14 @@ textarea{
 
 .profile img{
   width:190px;
+  max-width:100%;
   border-radius:14px;
   display:block;
 }
 
 .profile h2{
   color:#fff;
-  margin-bottom:6px;
+  margin:0 0 6px;
 }
 
 .profile .sub{
@@ -265,6 +303,8 @@ textarea{
 .profile p{
   margin:.4em 0;
 }
+
+/* FOOTER */
 
 .footer{
   background:var(--near);
@@ -277,6 +317,8 @@ textarea{
   color:var(--soft);
   margin-top:7px;
 }
+
+/* ACCESSIBILITY */
 
 .skip{
   position:absolute;
@@ -292,7 +334,10 @@ textarea{
   z-index:99;
 }
 
+/* MOBILE */
+
 @media(max-width:900px){
+
   .hero-grid,
   .profile-grid,
   .cards{
@@ -314,40 +359,72 @@ textarea{
   .top{
     position:static;
   }
+
+  .topin{
+    align-items:flex-start;
+    flex-direction:column;
+  }
 }
+
 </style>
 </head>
 
 <body>
 
-<a class="skip" href="#main">Skip to main content</a>
+<a class="skip" href="#main">
+  Skip to main content
+</a>
+
+<!-- HEADER -->
 
 <header class="top">
+
   <div class="wrap topin">
+
     <div class="brand">
       JAHAR ASAD, BPA
-      <small>THE REALTOR &amp; MORTGAGE MAN™ • ONE EXPERT. ONE SOLUTION.™</small>
+
+      <small>
+        THE REALTOR &amp; MORTGAGE MAN™ • ONE EXPERT. ONE SOLUTION.™
+      </small>
+
     </div>
-    <a class="phone" href="tel:9192003359">919-200-3359</a>
+
+    <a
+      class="phone"
+      href="tel:9192003359">
+      919-200-3359
+    </a>
+
   </div>
+
 </header>
 
 <main id="main">
 
+<!-- HERO / APPROVED AD + LEAD FORM -->
+
 <section class="hero">
+
   <div class="wrap hero-grid">
 
     <div class="campaign-art">
+
       <img
-        src="assets/first-time-approved-hero.png"
-        alt="First-Time Homebuyer approved campaign artwork">
+        src="assets/first-time-homebuyer-approved-ad.png"
+        alt="First-Time Homebuyer campaign from Jahar Asad, The Realtor and Mortgage Man">
+
     </div>
 
     <div class="form-card">
 
-      <div class="kicker">Get Your Personalized Plan</div>
+      <div class="kicker">
+        Get Your Personalized Plan
+      </div>
 
-      <h1>Your First Home May Be Closer Than You Think</h1>
+      <h1>
+        Your First Home May Be Closer Than You Think
+      </h1>
 
       <p>
         Tell me where you are today and I’ll help you build a clear
@@ -356,12 +433,32 @@ textarea{
 
       <form data-lead-form>
 
-        <input type="hidden" name="campaign" value="first-time-homebuyer">
-        <input type="hidden" name="form_started_at">
-        <input type="hidden" name="utm_source">
-        <input type="hidden" name="utm_campaign">
-        <input type="hidden" name="fbclid">
-        <input type="hidden" name="page_url">
+        <input
+          type="hidden"
+          name="campaign"
+          value="first-time-homebuyer">
+
+        <input
+          type="hidden"
+          name="form_started_at">
+
+        <input
+          type="hidden"
+          name="utm_source">
+
+        <input
+          type="hidden"
+          name="utm_campaign">
+
+        <input
+          type="hidden"
+          name="fbclid">
+
+        <input
+          type="hidden"
+          name="page_url">
+
+        <!-- Spam protection -->
 
         <input
           type="text"
@@ -374,116 +471,213 @@ textarea{
         <div class="grid2">
 
           <div class="field">
+
             <label>
               First name
-              <input name="first_name" autocomplete="given-name" required>
+
+              <input
+                name="first_name"
+                autocomplete="given-name"
+                required>
+
             </label>
+
           </div>
 
           <div class="field">
+
             <label>
               Last name
-              <input name="last_name" autocomplete="family-name" required>
+
+              <input
+                name="last_name"
+                autocomplete="family-name"
+                required>
+
             </label>
+
           </div>
 
           <div class="field">
+
             <label>
               Email
+
               <input
                 name="email"
                 type="email"
                 autocomplete="email"
                 required>
+
             </label>
+
           </div>
 
           <div class="field">
+
             <label>
               Mobile phone
+
               <input
                 name="phone"
+                type="tel"
                 inputmode="tel"
                 autocomplete="tel"
                 required>
+
             </label>
+
           </div>
 
           <div class="field">
+
             <label>
               State
-              <select name="state" required>
-                <option value="">Choose</option>
+
+              <select
+                name="state"
+                required>
+
+                <option value="">
+                  Choose
+                </option>
+
                 <option>NC</option>
                 <option>SC</option>
                 <option>GA</option>
                 <option>IL</option>
                 <option>FL</option>
+
               </select>
+
             </label>
+
           </div>
 
           <div class="field">
+
             <label>
               Timeframe
-              <select name="timeframe" required>
-                <option value="">Choose</option>
+
+              <select
+                name="timeframe"
+                required>
+
+                <option value="">
+                  Choose
+                </option>
+
                 <option>0–3 months</option>
                 <option>3–6 months</option>
                 <option>6–12 months</option>
                 <option>12+ months</option>
                 <option>Just researching</option>
+
               </select>
+
             </label>
+
           </div>
 
           <div class="field">
+
             <label>
               Current housing status
-              <select name="housing_status" required>
-                <option value="">Choose</option>
-                <option value="Renting">Renting</option>
-                <option value="Living with family">Living with family</option>
-                <option value="Own a home">Own a home</option>
-                <option value="Other">Other</option>
+
+              <select
+                name="housing_status"
+                required>
+
+                <option value="">
+                  Choose
+                </option>
+
+                <option value="Renting">
+                  Renting
+                </option>
+
+                <option value="Living with family">
+                  Living with family
+                </option>
+
+                <option value="Own a home">
+                  Own a home
+                </option>
+
+                <option value="Other">
+                  Other
+                </option>
+
               </select>
+
             </label>
+
           </div>
 
           <div class="field">
+
             <label>
               Preferred contact
-              <select name="preferred_contact" required>
-                <option value="">Choose</option>
+
+              <select
+                name="preferred_contact"
+                required>
+
+                <option value="">
+                  Choose
+                </option>
+
                 <option>Phone</option>
                 <option>Text</option>
                 <option>Email</option>
+
               </select>
+
             </label>
+
           </div>
 
           <div class="field full">
+
             <label>
               What is the biggest question or obstacle you want help with?
-              <textarea name="primary_obstacle"></textarea>
+
+              <textarea
+                name="primary_obstacle"></textarea>
+
             </label>
+
           </div>
 
         </div>
 
         <label class="consent">
-          <input type="checkbox" name="consent" required>
+
+          <input
+            type="checkbox"
+            name="consent"
+            required>
+
           <span>
             I agree that Jahar Asad / The Realtor &amp; Mortgage Man™
             may contact me about my request. Message and data rates may apply.
           </span>
+
         </label>
 
-        <button class="submit" type="submit">
+        <button
+          class="submit"
+          type="submit">
+
           SEND MY REQUEST
+
         </button>
 
-        <div class="status" role="status" aria-live="polite"></div>
+        <div
+          class="status"
+          role="status"
+          aria-live="polite">
+        </div>
 
         <div class="privacy">
           Your information is used to respond to your request and is not sold.
@@ -494,42 +688,73 @@ textarea{
     </div>
 
   </div>
+
 </section>
 
+<!-- HOMEBUYER PATH -->
+
 <section class="section alt">
+
   <div class="wrap">
 
-    <h2>Your First-Time Homebuyer Path</h2>
+    <h2>
+      Your First-Time Homebuyer Path
+    </h2>
+
+    <p class="section-intro">
+      Homeownership starts with understanding where you are today,
+      what financing options may be available and what steps can move
+      you toward becoming mortgage-ready.
+    </p>
 
     <div class="cards">
 
       <div class="card">
-        <h3>Know Your Numbers</h3>
+
+        <h3>
+          Know Your Numbers
+        </h3>
+
         <p>
           Review affordability, payment goals, credit considerations
-          and cash needed.
+          and the cash you may need for your purchase.
         </p>
+
       </div>
 
       <div class="card">
-        <h3>Explore Financing</h3>
+
+        <h3>
+          Explore Financing
+        </h3>
+
         <p>
-          Compare FHA, Conventional, VA, USDA and other eligible options.
+          Compare FHA, Conventional, VA, USDA and other eligible
+          financing options based on your situation.
         </p>
+
       </div>
 
       <div class="card">
-        <h3>Check DPA Options</h3>
+
+        <h3>
+          Check DPA Options
+        </h3>
+
         <p>
           Find out whether down payment or closing-cost assistance
-          may fit your situation.
+          programs may fit your situation and transaction.
         </p>
+
       </div>
 
     </div>
 
   </div>
+
 </section>
+
+<!-- PROFILE -->
 
 <section class="profile">
 
@@ -541,14 +766,17 @@ textarea{
 
     <div>
 
-      <h2>Jahar Asad, BPA</h2>
+      <h2>
+        Jahar Asad, BPA
+      </h2>
 
       <div class="sub">
         The Realtor &amp; Mortgage Man™
       </div>
 
       <p>
-        Realtor® | Mortgage Loan Officer — NMLS #2112298
+        Realtor® |
+        Mortgage Loan Officer — NMLS #2112298
       </p>
 
       <p>
@@ -572,6 +800,8 @@ textarea{
 
 </main>
 
+<!-- FOOTER -->
+
 <footer class="footer">
 
   <div class="wrap">
@@ -590,83 +820,159 @@ textarea{
     FL #BK3657435
 
     <div class="small">
+
       Program availability, eligibility, rates and terms vary.
       Educational information only.
       Not a commitment to lend.
+
     </div>
 
   </div>
 
 </footer>
 
+<!-- LEAD SUBMISSION -->
+
 <script>
+
 (() => {
 
-  const f = document.querySelector('[data-lead-form]');
+  const form =
+    document.querySelector('[data-lead-form]');
 
-  if (!f) return;
+  if (!form) return;
 
-  const status = f.querySelector('.status');
+  const status =
+    form.querySelector('.status');
 
-  f.querySelector('[name=form_started_at]').value = Date.now();
+  const started =
+    form.querySelector('[name=form_started_at]');
 
-  const qs = new URLSearchParams(location.search);
+  if (started) {
+    started.value = Date.now();
+  }
 
-  ['utm_source','utm_campaign','fbclid'].forEach(k => {
-    const el = f.querySelector(`[name=${k}]`);
-    if (el) el.value = qs.get(k) || '';
-  });
+  const qs =
+    new URLSearchParams(location.search);
 
-  f.querySelector('[name=page_url]').value = location.href;
+  [
+    'utm_source',
+    'utm_campaign',
+    'fbclid'
+  ].forEach(key => {
 
-  f.addEventListener('submit', async e => {
+    const field =
+      form.querySelector(`[name=${key}]`);
 
-    e.preventDefault();
-
-    status.textContent = 'Sending your information…';
-
-    const fd = new FormData(f);
-    const payload = {};
-
-    for (const [k,v] of fd.entries()) {
-      payload[k] = v;
+    if (field) {
+      field.value = qs.get(key) || '';
     }
 
-    payload.consent =
-      f.querySelector('[name=consent]').checked;
+  });
 
-    try {
+  const pageURL =
+    form.querySelector('[name=page_url]');
 
-      const r = await fetch('/api/lead', {
-        method:'POST',
-        headers:{
-          'content-type':'application/json'
-        },
-        body:JSON.stringify(payload)
-      });
+  if (pageURL) {
+    pageURL.value = location.href;
+  }
 
-      const j = await r.json();
+  form.addEventListener(
+    'submit',
+    async event => {
 
-      if (!r.ok) {
-        throw new Error(j.error || 'Unable to submit.');
+      event.preventDefault();
+
+      if (!form.checkValidity()) {
+
+        form.reportValidity();
+        return;
+
       }
 
       status.textContent =
-        'Thank you. Your information was received.';
+        'Sending your information…';
 
-      f.reset();
+      const formData =
+        new FormData(form);
 
-    } catch(err) {
+      const payload = {};
 
-      status.textContent =
-        (err.message || 'Unable to submit.') +
-        ' You can also call 919-200-3359.';
+      for (
+        const [key,value]
+        of formData.entries()
+      ) {
+
+        payload[key] = value;
+
+      }
+
+      const consent =
+        form.querySelector('[name=consent]');
+
+      payload.consent =
+        consent ? consent.checked : false;
+
+      try {
+
+        const response =
+          await fetch(
+            '/api/lead',
+            {
+              method:'POST',
+
+              headers:{
+                'Content-Type':'application/json'
+              },
+
+              body:
+                JSON.stringify(payload)
+            }
+          );
+
+        let result = {};
+
+        try {
+
+          result =
+            await response.json();
+
+        } catch (jsonError) {
+
+          result = {};
+
+        }
+
+        if (!response.ok) {
+
+          throw new Error(
+            result.error ||
+            'Unable to submit your request.'
+          );
+
+        }
+
+        status.textContent =
+          'Thank you. Your information was received. Jahar will follow up with you.';
+
+        form.reset();
+
+      }
+
+      catch(error) {
+
+        status.textContent =
+          (error.message ||
+          'We could not submit your information right now.') +
+          ' You can also call 919-200-3359.';
+
+      }
 
     }
-
-  });
+  );
 
 })();
+
 </script>
 
 </body>

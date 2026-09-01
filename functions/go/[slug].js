@@ -1,4 +1,8 @@
 const ROUTES = {
+  "first-time-homebuyer": { campaign: "first-time-homebuyer", destination: "/first-time-homebuyer.html" },
+  "down-payment-assistance": { campaign: "down-payment-assistance", destination: "/down-payment-assistance.html" },
+  "manufactured-homes": { campaign: "manufactured-homes", destination: "/manufactured-homes.html" },
+  "new-construction": { campaign: "new-construction", destination: "/new-construction.html" },
   "dscr": { campaign: "dscr-investors", destination: "/campaigns/dscr.html" },
   "dscr-investors": { campaign: "dscr-investors", destination: "/campaigns/dscr.html" },
   "sell-equity-finance-next-home": { campaign: "sell-and-buy", destination: "/campaigns/sell-equity-finance-next-home.html" }

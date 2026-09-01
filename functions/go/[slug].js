@@ -9,6 +9,7 @@ const ROUTES = {
   "foreclosure-solutions": { campaign: "pre-foreclosure", destination: "/foreclosure-solutions.html" },
   "usda": { campaign: "usda", destination: "/usda-home-loans.html" },
   "usda-home-loans": { campaign: "usda", destination: "/usda-home-loans.html" },
+  "rent-vs-own": { campaign: "rent-vs-own", destination: "/rent-vs-own.html" },
   "dscr": { campaign: "dscr-investors", destination: "/campaigns/dscr.html" },
   "dscr-investors": { campaign: "dscr-investors", destination: "/campaigns/dscr.html" },
   "sell-equity-finance-next-home": { campaign: "sell-and-buy", destination: "/campaigns/sell-equity-finance-next-home.html" }

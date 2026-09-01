@@ -3,6 +3,12 @@ const ROUTES = {
   "down-payment-assistance": { campaign: "down-payment-assistance", destination: "/down-payment-assistance.html" },
   "manufactured-homes": { campaign: "manufactured-homes", destination: "/manufactured-homes.html" },
   "new-construction": { campaign: "new-construction", destination: "/new-construction.html" },
+  "reverse-mortgage": { campaign: "reverse-mortgage", destination: "/reverse-mortgage.html" },
+  "reverse-mortgage-hecm": { campaign: "reverse-mortgage", destination: "/reverse-mortgage.html" },
+  "pre-foreclosure": { campaign: "pre-foreclosure", destination: "/foreclosure-solutions.html" },
+  "foreclosure-solutions": { campaign: "pre-foreclosure", destination: "/foreclosure-solutions.html" },
+  "usda": { campaign: "usda", destination: "/usda-home-loans.html" },
+  "usda-home-loans": { campaign: "usda", destination: "/usda-home-loans.html" },
   "dscr": { campaign: "dscr-investors", destination: "/campaigns/dscr.html" },
   "dscr-investors": { campaign: "dscr-investors", destination: "/campaigns/dscr.html" },
   "sell-equity-finance-next-home": { campaign: "sell-and-buy", destination: "/campaigns/sell-equity-finance-next-home.html" }

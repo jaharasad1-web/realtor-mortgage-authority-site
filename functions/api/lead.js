@@ -28,6 +28,7 @@ const ALLOWED_CAMPAIGNS = {
   "lending-partner": { label:"Lending Partnership", source:"Website | Lending Partner" },
   "professional-partner": { label:"Professional Partnership", source:"Website | Professional Partner" },
   "submit-referral": { label:"Professional Referral", source:"Website | Referral" },
+  "rent-vs-own": { label:"Rent vs. Own", source:"Website | Rent vs. Own" },
   "general": { label:"General Consultation", source:"Website | General Consultation" }
 };
 const CAMPAIGN_ALIASES={"New Construction":"new-construction","reverse-mortgage-hecm":"reverse-mortgage","pre-foreclosure-solutions":"pre-foreclosure","usda-0-down":"usda"};

@@ -3,7 +3,8 @@
 /finance.html /finance/ 301
 /homebuying-masterclass /homebuying-masterclass.html 200
 /masterclass-thank-you /masterclass-thank-you.html 200
-/contact /contact.html 200
+/contact.html /contact/ 302
+/contact /contact/ 301
 /homeowner-solutions /homeowner-solutions.html 200
 /partners /partners.html 200
 /thank-you /thank-you.html 200

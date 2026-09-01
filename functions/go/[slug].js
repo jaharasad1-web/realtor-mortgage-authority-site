@@ -42,6 +42,7 @@ export async function onRequestGet({ request, params }) {
   if (!target.searchParams.has("campaign")) target.searchParams.set("campaign", route.campaign);
   if (!target.searchParams.has("utm_source")) target.searchParams.set("utm_source", "qr");
   if (!target.searchParams.has("utm_medium")) target.searchParams.set("utm_medium", "qr");
+  if (!target.searchParams.has("utm_campaign")) target.searchParams.set("utm_campaign", route.campaign);
   if (!target.searchParams.has("qr_id")) target.searchParams.set("qr_id", slug);
 
   return new Response(null, {

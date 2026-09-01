@@ -10,6 +10,10 @@ const ROUTES = {
   "usda": { campaign: "usda", destination: "/usda-home-loans.html" },
   "usda-home-loans": { campaign: "usda", destination: "/usda-home-loans.html" },
   "rent-vs-own": { campaign: "rent-vs-own", destination: "/rent-vs-own.html" },
+  "fire-your-landlord": { campaign: "fire-your-landlord", destination: "https://trmm-onedesk.pages.dev/campaigns/fire-your-landlord.html" },
+  "right-sizing": { campaign: "right-sizing", destination: "https://trmm-onedesk.pages.dev/campaigns/right-sizing.html" },
+  "rightsizing-options": { campaign: "right-sizing", destination: "https://trmm-onedesk.pages.dev/campaigns/right-sizing.html" },
+  "downsize-upsize-right-size": { campaign: "right-sizing", destination: "https://trmm-onedesk.pages.dev/campaigns/right-sizing.html" },
   "dscr": { campaign: "dscr-investors", destination: "/campaigns/dscr.html" },
   "dscr-investors": { campaign: "dscr-investors", destination: "/campaigns/dscr.html" },
   "sell-equity-finance-next-home": { campaign: "sell-and-buy", destination: "/campaigns/sell-equity-finance-next-home.html" }
@@ -23,11 +27,14 @@ export async function onRequestGet({ request, params }) {
   if (!route) {
     return new Response("Campaign route not found", {
       status: 404,
-      headers: { "cache-control": "no-store" }
+      headers: { "Cache-Control": "no-store" }
     });
   }
 
-  const target = new URL(route.destination, incoming.origin);
+  const target = route.destination.startsWith("http")
+    ? new URL(route.destination)
+    : new URL(route.destination, incoming.origin);
+
   for (const [key, value] of incoming.searchParams.entries()) {
     target.searchParams.append(key, value);
   }
@@ -37,5 +44,11 @@ export async function onRequestGet({ request, params }) {
   if (!target.searchParams.has("utm_medium")) target.searchParams.set("utm_medium", "qr");
   if (!target.searchParams.has("qr_id")) target.searchParams.set("qr_id", slug);
 
-  return Response.redirect(target.toString(), 302);
+  return new Response(null, {
+    status: 302,
+    headers: {
+      "Location": target.toString(),
+      "Cache-Control": "no-store"
+    }
+  });
 }

@@ -5,6 +5,15 @@
   Permissions-Policy: camera=(), microphone=(), geolocation=()
   Cross-Origin-Opener-Policy: same-origin
 
+/contact.html
+  Cache-Control: no-store, no-cache, must-revalidate
+
+/contact
+  Cache-Control: no-store, no-cache, must-revalidate
+
+/api/*
+  Cache-Control: no-store
+
 /*.html
   Cache-Control: public, max-age=0, must-revalidate
 

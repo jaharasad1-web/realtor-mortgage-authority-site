@@ -13,22 +13,25 @@ Permanent campaign router behavior:
 - adds `campaign` when absent
 - adds `utm_source=qr` when absent
 - adds `utm_medium=qr` when absent
+- adds `utm_campaign=<canonical campaign>` when absent
 - adds `qr_id=<slug>` when absent
 - returns 302 redirects with `Cache-Control: no-store`
+
+Canonical UTM campaign attribution was added to the router in commit `1aff7a339d2ecd233a3e2e7c48315d11aeeabda9`.
 
 ## Campaign status
 
 | Campaign | Go route | Destination | Lead API | Source audit |
 |---|---|---|---|---|
-| First-Time Homebuyer | `/go/first-time-homebuyer` | `/first-time-homebuyer.html` | `/api/lead` | CRM + attribution wired; production route previously opened successfully |
-| Down Payment Assistance | `/go/down-payment-assistance` | `/down-payment-assistance.html` | `/api/lead` | Consent present; page URL + UTM capture present |
-| Manufactured Homes | `/go/manufactured-homes` | `/manufactured-homes.html` | `/api/lead` | Consent present; page URL preserves router attribution |
-| New Construction | `/go/new-construction` | `/new-construction.html` | `/api/lead` | Canonical campaign + consent previously repaired |
-| Reverse Mortgage | `/go/reverse-mortgage` | `/reverse-mortgage.html` | `/api/lead` | Alias `reverse-mortgage-hecm` normalizes to `reverse-mortgage`; consent present |
+| First-Time Homebuyer | `/go/first-time-homebuyer` | `/first-time-homebuyer.html` | `/api/lead` | CRM + dedicated UTM/QR attribution wired; production route previously opened successfully |
+| Down Payment Assistance | `/go/down-payment-assistance` | `/down-payment-assistance.html` | `/api/lead` | Consent present; page URL preserves router attribution; source audited |
+| Manufactured Homes | `/go/manufactured-homes` | `/manufactured-homes.html` | `/api/lead` | Dedicated UTM/QR attribution + validity check added in `b126af1f2efacb2e78418f3dccec18c767451706` |
+| New Construction | `/go/new-construction` | `/new-construction.html` | `/api/lead` | Canonical campaign + consent + dedicated UTM/QR attribution wired in `8c97e7b827bf9ace0a6f43d0bfc76a12176f7331` |
+| Reverse Mortgage | `/go/reverse-mortgage` | `/reverse-mortgage.html` | `/api/lead` | Alias normalizes to `reverse-mortgage`; dedicated UTM/QR attribution + validity check added in `623886e0174bf9cee62db8a26f966c2c82a8c224` |
 | Reverse Mortgage alias | `/go/reverse-mortgage-hecm` | `/reverse-mortgage.html` | `/api/lead` | Routed to canonical Reverse Mortgage campaign |
-| Pre-Foreclosure | `/go/pre-foreclosure` | `/foreclosure-solutions.html` | `/api/lead` | Alias normalizes to `pre-foreclosure`; consent present |
+| Pre-Foreclosure | `/go/pre-foreclosure` | `/foreclosure-solutions.html` | `/api/lead` | Alias normalizes to `pre-foreclosure`; dedicated UTM/QR attribution + validity check added in `7224844ddfaacf4c0a92c7740001eea3e92499c7` |
 | Foreclosure Solutions alias | `/go/foreclosure-solutions` | `/foreclosure-solutions.html` | `/api/lead` | Routed to canonical Pre-Foreclosure campaign |
-| USDA | `/go/usda` | `/usda-home-loans.html` | `/api/lead` | Alias `usda-0-down` normalizes to `usda`; consent present |
+| USDA | `/go/usda` | `/usda-home-loans.html` | `/api/lead` | Alias `usda-0-down` normalizes to `usda`; dedicated UTM/QR attribution + validity check added in `671ac2332b3cc951da70ebed1ef016faaaa3455e` |
 | USDA alias | `/go/usda-home-loans` | `/usda-home-loans.html` | `/api/lead` | Routed to canonical USDA campaign |
 | Rent vs. Own | `/go/rent-vs-own` | `/rent-vs-own.html` | `/api/lead` | CRM allowlist + consent/QR attribution repaired 2026-09-01 |
 | Fire Your Landlord | `/go/fire-your-landlord` | OneDesk campaign page | OneDesk `/api/lead-v2` | Source wired; OneDesk lead intake hardened 2026-09-01 |

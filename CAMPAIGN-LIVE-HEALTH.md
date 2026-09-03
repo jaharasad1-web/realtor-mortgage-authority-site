@@ -41,6 +41,10 @@ Canonical UTM campaign attribution was added to the router in commit `1aff7a339d
 | DSCR alias | `/go/dscr-investors` | `/campaigns/dscr.html` | `/api/dscr-lead` | Routed to DSCR landing page |
 | Sell / Equity / Finance / Next Home | `/go/sell-equity-finance-next-home` | `/campaigns/sell-equity-finance-next-home.html` | `/api/lead` | Canonical CRM campaign is `sell-and-buy`; approved embedded artwork intentionally untouched |
 
+## General contact intake
+
+`/contact/` posts through `/contact-submit` into the main `/api/lead` CRM intake. Full dedicated attribution (`utm_source`, `utm_medium`, `utm_campaign`, `qr_id`, `fbclid`, `page_url`) plus automatic `form_started_at` capture was added in commit `13a4d0a02590361d08f048ded1f3b2a69d0e970e`. The selected contact interest is converted by the server bridge into the appropriate canonical CRM campaign before the lead is saved.
+
 ## CRM canonical campaigns repaired/confirmed
 
 Main authority-site lead API includes `rent-vs-own`, `sell-and-buy`, `manufactured-homes`, `new-construction`, `reverse-mortgage`, `pre-foreclosure`, `usda`, `down-payment-assistance`, and `first-time-homebuyer` among its accepted campaigns.

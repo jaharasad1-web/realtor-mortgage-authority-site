@@ -1,8 +1,22 @@
 # TRMM Campaign Live Health
 
-Last source audit: 2026-09-02
+Last source audit: 2026-09-03
 
 This manifest tracks the production campaign routing + lead-intake wiring in `realtor-mortgage-authority-site`. It is intentionally source-level only: a route is not marked browser-verified unless it has actually been opened successfully in production.
+
+## Launch readiness
+
+Source-level launch audit completed 2026-09-03. Approved homepage source, core campaign router, hardened `/contact/` intake, campaign attribution, and public-state restrictions were rechecked. No source-level launch blocker was found in those core paths. Production/browser verification remains a separate final check after deployment.
+
+Recent conversion-path hardening:
+- Ask Jahar -> `/contact-submit` -> `/api/lead`: `4ec092eabb60e639f07dc6b4017f582c8e50bd34`
+- AI Pre-Approval CRM intake: `a88064a0749bb48b9a579fef9938ae6cf6fdd80d`
+- Contact interest preselection: `ed5a5c7c8e234f875611b6a1e31387f7f88bd7ac`
+- Search Homes attribution forwarding: `60671648586cc7804f6994277ad48ce91255ceb3`
+- Condo Financing intent + attribution: `2863b3ca5869ebcb040772f340eedc420b166531`
+- Homeowner Solutions attribution forwarding: `f05962368bae9fa4fd751b4b1cc85689302fb5a4`
+- Housing Transitions CRM routing: `e7cc5a23d3a710a460c4a0302d73d4da54cb38d2`
+- Professional Partners attribution forwarding: `57483151c0644fa8ae6ee33e9cb040f6573736d2`
 
 ## Core router
 
@@ -24,7 +38,7 @@ Canonical UTM campaign attribution was added to the router in commit `1aff7a339d
 | Campaign | Go route | Destination | Lead API | Source audit |
 |---|---|---|---|---|
 | First-Time Homebuyer | `/go/first-time-homebuyer` | `/first-time-homebuyer.html` | `/api/lead` | Full dedicated attribution (`utm_source`, `utm_medium`, `utm_campaign`, `qr_id`, `fbclid`, `page_url`), anti-bot timing, honeypot, explicit consent and browser validity checks confirmed 2026-09-02; production route previously opened successfully |
-| Down Payment Assistance | `/go/down-payment-assistance` | `/down-payment-assistance.html` | `/api/lead` | Consent + validity checks present. Page explicitly captures `utm_source`, `utm_campaign`, `fbclid`, and full `page_url`; API safely recovers `utm_medium`, `qr_id`, and any missing attribution from the landing-page URL, so router attribution is preserved without altering approved page artwork/layout. Backend fallback confirmed 2026-09-02. |
+| Down Payment Assistance | `/go/down-payment-assistance` | `/down-payment-assistance.html` | `/api/lead` | Consent + validity checks present. Page explicitly captures `utm_source`, `utm_campaign`, `fbclid`, and full `page_url`; API safely recovers `utm_medium`, `qr_id`, and any missing attribution from the landing-page URL. |
 | Manufactured Homes | `/go/manufactured-homes` | `/manufactured-homes.html` | `/api/lead` | Dedicated UTM/QR attribution + validity check added in `b126af1f2efacb2e78418f3dccec18c767451706` |
 | New Construction | `/go/new-construction` | `/new-construction.html` | `/api/lead` | Canonical campaign + consent + dedicated UTM/QR attribution wired in `8c97e7b827bf9ace0a6f43d0bfc76a12176f7331` |
 | Reverse Mortgage | `/go/reverse-mortgage` | `/reverse-mortgage.html` | `/api/lead` | Alias normalizes to `reverse-mortgage`; dedicated UTM/QR attribution + validity check added in `623886e0174bf9cee62db8a26f966c2c82a8c224` |
@@ -43,13 +57,19 @@ Canonical UTM campaign attribution was added to the router in commit `1aff7a339d
 
 ## General contact intake
 
-`/contact/` posts through `/contact-submit` into the main `/api/lead` CRM intake. Full dedicated attribution (`utm_source`, `utm_medium`, `utm_campaign`, `qr_id`, `fbclid`, `page_url`) plus automatic `form_started_at` capture was added in commit `13a4d0a02590361d08f048ded1f3b2a69d0e970e`. The selected contact interest is converted by the server bridge into the appropriate canonical CRM campaign before the lead is saved.
+`/contact/` posts through `/contact-submit` into the main `/api/lead` CRM intake. Full dedicated attribution (`utm_source`, `utm_medium`, `utm_campaign`, `qr_id`, `fbclid`, `page_url`) plus automatic `form_started_at` capture is present. Query-string `interest` is validated against the actual select options before preselection, so authority-page CTAs retain their intended CRM category.
+
+Public state choices remain restricted to NC, SC, GA, IL, and FL.
+
+## Homepage protection
+
+The 2026-09-03 source audit confirmed the approved homepage continues to reference the locked TRMM logo, locked Jahar profile image, approved family image, and locked seven-logo brand strip. No homepage redesign was performed during launch hardening.
 
 ## CRM canonical campaigns repaired/confirmed
 
-Main authority-site lead API includes `rent-vs-own`, `sell-and-buy`, `manufactured-homes`, `new-construction`, `reverse-mortgage`, `pre-foreclosure`, `usda`, `down-payment-assistance`, and `first-time-homebuyer` among its accepted campaigns.
+Main authority-site lead API includes the campaign categories used by the current contact and campaign paths, including `rent-vs-own`, `sell-and-buy`, `manufactured-homes`, `new-construction`, `reverse-mortgage`, `pre-foreclosure`, `usda`, `down-payment-assistance`, `first-time-homebuyer`, and the authority-site contact categories.
 
-The main lead API also recovers `utm_source`, `utm_medium`, `utm_campaign`, `qr_id`, and `fbclid` from `page_url` when a landing page does not send a dedicated field. This preserves permanent-router attribution for legacy or protected campaign pages without requiring visual-page rewrites.
+The main lead API also recovers `utm_source`, `utm_medium`, `utm_campaign`, `qr_id`, and `fbclid` from `page_url` when a landing page does not send a dedicated field.
 
 Aliases currently include:
 - `New Construction` -> `new-construction`
@@ -57,9 +77,11 @@ Aliases currently include:
 - `pre-foreclosure-solutions` -> `pre-foreclosure`
 - `usda-0-down` -> `usda`
 
-## Important verification rule
+## Final launch gate
 
-Source configuration is not the same as live browser verification. Do not claim every `/go/` route is production-verified until each route has been opened/tested after Cloudflare deployment.
+Source audit: PASS.
+
+Remaining gate: confirm the newest `main` deployment is serving on the public domain and perform a short browser smoke test of homepage, contact submission, and representative `/go/` routes. Do not describe untested routes as browser-verified.
 
 ## Artwork protection
 

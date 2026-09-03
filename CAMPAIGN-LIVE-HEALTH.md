@@ -23,7 +23,7 @@ Canonical UTM campaign attribution was added to the router in commit `1aff7a339d
 
 | Campaign | Go route | Destination | Lead API | Source audit |
 |---|---|---|---|---|
-| First-Time Homebuyer | `/go/first-time-homebuyer` | `/first-time-homebuyer.html` | `/api/lead` | CRM + dedicated UTM/QR attribution wired; production route previously opened successfully |
+| First-Time Homebuyer | `/go/first-time-homebuyer` | `/first-time-homebuyer.html` | `/api/lead` | Full dedicated attribution (`utm_source`, `utm_medium`, `utm_campaign`, `qr_id`, `fbclid`, `page_url`), anti-bot timing, honeypot, explicit consent and browser validity checks confirmed 2026-09-02; production route previously opened successfully |
 | Down Payment Assistance | `/go/down-payment-assistance` | `/down-payment-assistance.html` | `/api/lead` | Consent + validity checks present. Page explicitly captures `utm_source`, `utm_campaign`, `fbclid`, and full `page_url`; API safely recovers `utm_medium`, `qr_id`, and any missing attribution from the landing-page URL, so router attribution is preserved without altering approved page artwork/layout. Backend fallback confirmed 2026-09-02. |
 | Manufactured Homes | `/go/manufactured-homes` | `/manufactured-homes.html` | `/api/lead` | Dedicated UTM/QR attribution + validity check added in `b126af1f2efacb2e78418f3dccec18c767451706` |
 | New Construction | `/go/new-construction` | `/new-construction.html` | `/api/lead` | Canonical campaign + consent + dedicated UTM/QR attribution wired in `8c97e7b827bf9ace0a6f43d0bfc76a12176f7331` |
@@ -33,7 +33,7 @@ Canonical UTM campaign attribution was added to the router in commit `1aff7a339d
 | Foreclosure Solutions alias | `/go/foreclosure-solutions` | `/foreclosure-solutions.html` | `/api/lead` | Routed to canonical Pre-Foreclosure campaign |
 | USDA | `/go/usda` | `/usda-home-loans.html` | `/api/lead` | Alias `usda-0-down` normalizes to `usda`; dedicated UTM/QR attribution + validity check added in `671ac2332b3cc951da70ebed1ef016faaaa3455e` |
 | USDA alias | `/go/usda-home-loans` | `/usda-home-loans.html` | `/api/lead` | Routed to canonical USDA campaign |
-| Rent vs. Own | `/go/rent-vs-own` | `/rent-vs-own.html` | `/api/lead` | CRM allowlist + consent/QR attribution repaired 2026-09-01 |
+| Rent vs. Own | `/go/rent-vs-own` | `/rent-vs-own.html` | `/api/lead` | Full dedicated attribution already present; anti-bot timing, browser validity checks and explicit consent serialization added in `28db48c2111951663af4bfe03fca7d3c7f86fd9d` |
 | Fire Your Landlord | `/go/fire-your-landlord` | OneDesk campaign page | OneDesk `/api/lead-v2` | Source wired; OneDesk lead intake hardened 2026-09-01 |
 | Right-Sizing | `/go/right-sizing` | OneDesk campaign page | OneDesk `/api/lead-v2` | Source wired; OneDesk lead intake hardened 2026-09-01 |
 | Right-Sizing aliases | `/go/rightsizing-options`, `/go/downsize-upsize-right-size` | OneDesk campaign page | OneDesk `/api/lead-v2` | Routed to canonical `right-sizing` |

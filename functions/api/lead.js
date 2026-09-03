@@ -31,7 +31,7 @@ const ALLOWED_CAMPAIGNS = {
   "rent-vs-own": { label:"Rent vs. Own", source:"Website | Rent vs. Own" },
   "general": { label:"General Consultation", source:"Website | General Consultation" }
 };
-const CAMPAIGN_ALIASES={"New Construction":"new-construction","reverse-mortgage-hecm":"reverse-mortgage","pre-foreclosure-solutions":"pre-foreclosure","usda-0-down":"usda"};
+const CAMPAIGN_ALIASES={"New Construction":"new-construction","reverse-mortgage-hecm":"reverse-mortgage","pre-foreclosure-solutions":"pre-foreclosure","usda-0-down":"usda","sell-equity-finance-next-home":"sell-and-buy"};
 const ALLOWED_STATES=new Set(["NC","SC","GA","IL","FL"]);
 function json(body,status=200,extra={}){return new Response(JSON.stringify(body),{status,headers:{"content-type":"application/json; charset=utf-8","cache-control":"no-store",...extra}})}
 function cleanText(value,max=250){if(typeof value!=="string")return"";return value.trim().replace(/\s+/g," ").slice(0,max)}

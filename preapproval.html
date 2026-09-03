@@ -20,13 +20,15 @@
 <article class="content-card"><span class="card-number">02</span><h2>Follow the guided questions</h2><p>The process organizes your information and explains why each item matters.</p></article>
 <article class="content-card"><span class="card-number">03</span><h2>Review your next steps</h2><p>Your file is reviewed for the appropriate lending path and required documentation.</p></article>
 </div>
-<form class="lead-form centered" name="preapproval-interest" method="POST" data-netlify="true">
-<input type="hidden" name="form-name" value="preapproval-interest">
+<form class="lead-form centered" id="preapproval-form" method="POST" action="/contact-submit">
+<input type="hidden" name="company" value=""><input type="hidden" name="form_started_at" value=""><input type="hidden" name="campaign" value="preapproval"><input type="hidden" name="interest" value="preapproval"><input type="hidden" name="utm_source"><input type="hidden" name="utm_medium"><input type="hidden" name="utm_campaign"><input type="hidden" name="qr_id"><input type="hidden" name="fbclid"><input type="hidden" name="page_url">
 <h2>Begin here</h2>
 <label>Name<input name="name" required></label>
 <label>Email<input name="email" type="email" required></label>
 <label>Phone<input name="phone" type="tel" required></label>
-<label>Primary goal<select name="goal"><option>Buy a home</option><option>Refinance</option><option>Reverse mortgage purchase</option><option>Investor financing</option><option>Down payment assistance</option></select></label>
+<label>State<select name="state" required><option value="">Choose state</option><option>NC</option><option>SC</option><option>GA</option><option>IL</option><option>FL</option></select></label>
+<label>Primary goal<select name="primary_obstacle"><option>Buy a home</option><option>Refinance</option><option>Reverse mortgage purchase</option><option>Investor financing</option><option>Down payment assistance</option></select></label>
+<label class="check"><input type="checkbox" name="consent" required><span>I agree that Jahar Asad / TRMM may contact me about my mortgage pre-approval request. Message and data rates may apply.</span></label>
 <button class="button gold" type="submit">Start My Guided Pre-Approval</button>
 <p class="disclaimer">Submitting this form does not constitute a mortgage application, approval, commitment, or offer to lend.</p>
-</form></section></main></body></html>
+</form></section></main><script>(()=>{const form=document.getElementById('preapproval-form');if(!form)return;form.elements.form_started_at.value=Date.now();const qs=new URLSearchParams(location.search);['utm_source','utm_medium','utm_campaign','qr_id','fbclid'].forEach(k=>{if(form.elements[k])form.elements[k].value=qs.get(k)||''});form.elements.page_url.value=location.href})();</script></body></html>

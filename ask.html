@@ -15,14 +15,14 @@
 
 <main><section class="page-hero"><div class="shell"><p class="eyebrow">Ask The Mortgage Man™</p><h1>What would you like explained?</h1><p>Submit a mortgage, homebuying, selling, or financing question for educational guidance.</p></div></section>
 <section class="shell page-section form-layout">
-<form class="lead-form" name="ask-the-mortgage-man" method="POST" data-netlify="true">
-<input type="hidden" name="form-name" value="ask-the-mortgage-man">
-<label>Name<input name="name" required></label>
+<form class="lead-form" id="ask-form" method="POST" action="/contact-submit">
+<input type="hidden" name="company" value=""><input type="hidden" name="form_started_at" value=""><input type="hidden" name="campaign" value="general"><input type="hidden" name="interest" value="general"><input type="hidden" name="utm_source"><input type="hidden" name="utm_medium"><input type="hidden" name="utm_campaign"><input type="hidden" name="qr_id"><input type="hidden" name="fbclid"><input type="hidden" name="page_url">
+<label>Name<input name="first_name" required></label>
 <label>Email<input name="email" type="email" required></label>
-<label>Phone<input name="phone" type="tel"></label>
-<label>Your question<textarea name="question" rows="6" required></textarea></label>
-<label class="check"><input type="checkbox" name="consent" required><span>I understand this form is for educational information and does not create a loan commitment or agency relationship.</span></label>
+<label>Phone<input name="phone" type="tel" required></label>
+<label>Your question<textarea name="primary_obstacle" rows="6" required></textarea></label>
+<label class="check"><input type="checkbox" name="consent" required><span>I understand this form is for educational information and does not create a loan commitment or agency relationship. I agree that Jahar Asad/TRMM may contact me about my request. Message/data rates may apply.</span></label>
 <button class="button gold" type="submit">Submit My Question</button>
 </form>
 <aside class="content-card"><h2>Popular questions</h2><p>Should I wait for rates to fall?</p><p>How much house can I afford?</p><p>What is the difference between FHA, USDA, VA, and conventional financing?</p><p>How does down payment assistance work?</p></aside>
-</section></main></body></html>
+</section></main><script>(()=>{const form=document.getElementById('ask-form');if(!form)return;form.elements.form_started_at.value=Date.now();const qs=new URLSearchParams(location.search);['utm_source','utm_medium','utm_campaign','qr_id','fbclid'].forEach(k=>{if(form.elements[k])form.elements[k].value=qs.get(k)||''});form.elements.page_url.value=location.href})();</script></body></html>

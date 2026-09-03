@@ -1,6 +1,6 @@
 # TRMM Campaign Live Health
 
-Last source audit: 2026-09-01
+Last source audit: 2026-09-02
 
 This manifest tracks the production campaign routing + lead-intake wiring in `realtor-mortgage-authority-site`. It is intentionally source-level only: a route is not marked browser-verified unless it has actually been opened successfully in production.
 
@@ -24,7 +24,7 @@ Canonical UTM campaign attribution was added to the router in commit `1aff7a339d
 | Campaign | Go route | Destination | Lead API | Source audit |
 |---|---|---|---|---|
 | First-Time Homebuyer | `/go/first-time-homebuyer` | `/first-time-homebuyer.html` | `/api/lead` | CRM + dedicated UTM/QR attribution wired; production route previously opened successfully |
-| Down Payment Assistance | `/go/down-payment-assistance` | `/down-payment-assistance.html` | `/api/lead` | Consent present; page URL preserves router attribution; source audited |
+| Down Payment Assistance | `/go/down-payment-assistance` | `/down-payment-assistance.html` | `/api/lead` | Consent + validity checks present. Page explicitly captures `utm_source`, `utm_campaign`, `fbclid`, and full `page_url`; API safely recovers `utm_medium`, `qr_id`, and any missing attribution from the landing-page URL, so router attribution is preserved without altering approved page artwork/layout. Backend fallback confirmed 2026-09-02. |
 | Manufactured Homes | `/go/manufactured-homes` | `/manufactured-homes.html` | `/api/lead` | Dedicated UTM/QR attribution + validity check added in `b126af1f2efacb2e78418f3dccec18c767451706` |
 | New Construction | `/go/new-construction` | `/new-construction.html` | `/api/lead` | Canonical campaign + consent + dedicated UTM/QR attribution wired in `8c97e7b827bf9ace0a6f43d0bfc76a12176f7331` |
 | Reverse Mortgage | `/go/reverse-mortgage` | `/reverse-mortgage.html` | `/api/lead` | Alias normalizes to `reverse-mortgage`; dedicated UTM/QR attribution + validity check added in `623886e0174bf9cee62db8a26f966c2c82a8c224` |
@@ -44,6 +44,8 @@ Canonical UTM campaign attribution was added to the router in commit `1aff7a339d
 ## CRM canonical campaigns repaired/confirmed
 
 Main authority-site lead API includes `rent-vs-own`, `sell-and-buy`, `manufactured-homes`, `new-construction`, `reverse-mortgage`, `pre-foreclosure`, `usda`, `down-payment-assistance`, and `first-time-homebuyer` among its accepted campaigns.
+
+The main lead API also recovers `utm_source`, `utm_medium`, `utm_campaign`, `qr_id`, and `fbclid` from `page_url` when a landing page does not send a dedicated field. This preserves permanent-router attribution for legacy or protected campaign pages without requiring visual-page rewrites.
 
 Aliases currently include:
 - `New Construction` -> `new-construction`

@@ -1,12 +1,18 @@
 # TRMM Campaign Live Health
 
 Last source audit: 2026-09-03
+Production smoke test: PASS — 2026-09-03
+Launch status: PRODUCTION READY / LAUNCHED
 
-This manifest tracks the production campaign routing + lead-intake wiring in `realtor-mortgage-authority-site`. It is intentionally source-level only: a route is not marked browser-verified unless it has actually been opened successfully in production.
+This manifest tracks the production campaign routing + lead-intake wiring in `realtor-mortgage-authority-site`. Source-level checks are distinguished from browser verification.
 
 ## Launch readiness
 
-Source-level launch audit completed 2026-09-03. Approved homepage source, core campaign router, hardened `/contact/` intake, campaign attribution, and public-state restrictions were rechecked. No source-level launch blocker was found in those core paths. Production/browser verification remains a separate final check after deployment.
+Source-level launch audit completed 2026-09-03. Approved homepage source, core campaign router, hardened `/contact/` intake, campaign attribution, and public-state restrictions were rechecked. No source-level launch blocker was found in those core paths.
+
+Final production smoke test completed 2026-09-03. The approved homepage was confirmed live, and Jahar Asad manually confirmed both the live `/contact/` submission path and `/go/first-time-homebuyer` campaign route work in a normal production browser.
+
+**LAUNCH GATE: PASS.**
 
 Recent conversion-path hardening:
 - Ask Jahar -> `/contact-submit` -> `/api/lead`: `4ec092eabb60e639f07dc6b4017f582c8e50bd34`
@@ -37,7 +43,7 @@ Canonical UTM campaign attribution was added to the router in commit `1aff7a339d
 
 | Campaign | Go route | Destination | Lead API | Source audit |
 |---|---|---|---|---|
-| First-Time Homebuyer | `/go/first-time-homebuyer` | `/first-time-homebuyer.html` | `/api/lead` | Full dedicated attribution (`utm_source`, `utm_medium`, `utm_campaign`, `qr_id`, `fbclid`, `page_url`), anti-bot timing, honeypot, explicit consent and browser validity checks confirmed 2026-09-02; production route previously opened successfully |
+| First-Time Homebuyer | `/go/first-time-homebuyer` | `/first-time-homebuyer.html` | `/api/lead` | Full dedicated attribution (`utm_source`, `utm_medium`, `utm_campaign`, `qr_id`, `fbclid`, `page_url`), anti-bot timing, honeypot, explicit consent and browser validity checks confirmed 2026-09-02; production route browser-confirmed 2026-09-03 |
 | Down Payment Assistance | `/go/down-payment-assistance` | `/down-payment-assistance.html` | `/api/lead` | Consent + validity checks present. Page explicitly captures `utm_source`, `utm_campaign`, `fbclid`, and full `page_url`; API safely recovers `utm_medium`, `qr_id`, and any missing attribution from the landing-page URL. |
 | Manufactured Homes | `/go/manufactured-homes` | `/manufactured-homes.html` | `/api/lead` | Dedicated UTM/QR attribution + validity check added in `b126af1f2efacb2e78418f3dccec18c767451706` |
 | New Construction | `/go/new-construction` | `/new-construction.html` | `/api/lead` | Canonical campaign + consent + dedicated UTM/QR attribution wired in `8c97e7b827bf9ace0a6f43d0bfc76a12176f7331` |
@@ -61,6 +67,8 @@ Canonical UTM campaign attribution was added to the router in commit `1aff7a339d
 
 Public state choices remain restricted to NC, SC, GA, IL, and FL.
 
+Production contact submission was manually confirmed working on 2026-09-03.
+
 ## Homepage protection
 
 The 2026-09-03 source audit confirmed the approved homepage continues to reference the locked TRMM logo, locked Jahar profile image, approved family image, and locked seven-logo brand strip. No homepage redesign was performed during launch hardening.
@@ -80,8 +88,13 @@ Aliases currently include:
 ## Final launch gate
 
 Source audit: PASS.
+Homepage production check: PASS.
+Contact submission smoke test: PASS.
+First-Time Homebuyer `/go/` route smoke test: PASS.
 
-Remaining gate: confirm the newest `main` deployment is serving on the public domain and perform a short browser smoke test of homepage, contact submission, and representative `/go/` routes. Do not describe untested routes as browser-verified.
+**Overall launch status: PRODUCTION READY / LAUNCHED — 2026-09-03.**
+
+Additional campaign routes remain governed by their individual source-audit status above and can be browser-tested during normal campaign QA without blocking the core website launch.
 
 ## Artwork protection
 

@@ -38,25 +38,6 @@ async function sendResend(env, { to, subject, text }) {
   return { ok: true };
 }
 
-async function sendNtfy(env, { title, message }) {
-  const topic = clean(env.NTFY_TOPIC, 200);
-  if (!topic) return { skipped: true };
-  const server = (clean(env.NTFY_SERVER, 300) || 'https://ntfy.sh').replace(/\/$/, '');
-  const r = await fetch(server, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      topic,
-      title: clean(title, 200),
-      message,
-      priority: 4,
-      tags: ['house', 'rotating_light']
-    })
-  });
-  if (!r.ok) throw new Error(`ntfy ${r.status}: ${(await r.text()).slice(0, 300)}`);
-  return { ok: true };
-}
-
 async function notifyLead(env, lead) {
   const first = clean(lead.first_name || lead.name, 80) || 'there';
   const last = clean(lead.last_name, 80);
@@ -90,12 +71,7 @@ async function notifyLead(env, lead) {
     text: `NEW TRMM WEBSITE LEAD\n${alertLines.join('\n')}\n\nOpen your CRM to review the full lead record.`
   }) : Promise.resolve({ skipped: true });
 
-  const ownerPush = sendNtfy(env, {
-    title: `New TRMM Lead — ${campaign}`,
-    message: `A new ${campaign} lead was saved successfully.\n\nCheck your TRMM CRM for the customer's full details.`
-  });
-
-  const results = await Promise.allSettled([customerEmail, ownerEmail, ownerPush]);
+  const results = await Promise.allSettled([customerEmail, ownerEmail]);
   results.forEach((result, i) => {
     if (result.status === 'rejected') console.error('Lead notification failed', i, String(result.reason));
   });

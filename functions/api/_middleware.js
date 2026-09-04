@@ -42,14 +42,16 @@ async function sendNtfy(env, { title, message }) {
   const topic = clean(env.NTFY_TOPIC, 200);
   if (!topic) return { skipped: true };
   const server = (clean(env.NTFY_SERVER, 300) || 'https://ntfy.sh').replace(/\/$/, '');
-  const r = await fetch(`${server}/${encodeURIComponent(topic)}`, {
+  const r = await fetch(server, {
     method: 'POST',
-    headers: {
-      'Title': clean(title, 200),
-      'Priority': 'high',
-      'Tags': 'house,rotating_light'
-    },
-    body: message
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      topic,
+      title: clean(title, 200),
+      message,
+      priority: 4,
+      tags: ['house', 'rotating_light']
+    })
   });
   if (!r.ok) throw new Error(`ntfy ${r.status}: ${(await r.text()).slice(0, 300)}`);
   return { ok: true };
@@ -88,8 +90,6 @@ async function notifyLead(env, lead) {
     text: `NEW TRMM WEBSITE LEAD\n${alertLines.join('\n')}\n\nOpen your CRM to review the full lead record.`
   }) : Promise.resolve({ skipped: true });
 
-  // ntfy is used only as a private-ish alert channel, not as a lead record.
-  // Keep customer names, phone numbers, email addresses and inquiry text out of the push.
   const ownerPush = sendNtfy(env, {
     title: `New TRMM Lead — ${campaign}`,
     message: `A new ${campaign} lead was saved successfully.\n\nCheck your TRMM CRM for the customer's full details.`

@@ -8,23 +8,31 @@ export async function onRequestGet({ env }) {
     ? env.NTFY_SERVER.trim()
     : 'https://ntfy.sh').replace(/\/$/, '');
 
-  const r = await fetch(`${server}/${encodeURIComponent(topic)}`, {
-    method: 'POST',
-    headers: {
-      'Title': 'TRMM Website Test',
-      'Priority': 'high',
-      'Tags': 'white_check_mark,house'
-    },
-    body: 'Cloudflare can reach your ntfy topic. Website notification connection is working.'
-  });
+  try {
+    const r = await fetch(server, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        topic,
+        title: 'TRMM Website Test',
+        message: 'Cloudflare can reach your ntfy topic. Website notification connection is working.',
+        priority: 4,
+        tags: ['white_check_mark', 'house']
+      })
+    });
 
-  const body = await r.text();
-  if (!r.ok) {
-    return new Response(`ntfy request failed: ${r.status} ${body.slice(0, 200)}`, { status: 502 });
+    const body = await r.text();
+    return new Response(
+      r.ok ? 'TRMM ntfy test sent successfully. Check your phone.' : `ntfy request failed: ${r.status} ${body.slice(0, 300)}`,
+      {
+        status: r.ok ? 200 : 502,
+        headers: { 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'no-store' }
+      }
+    );
+  } catch (error) {
+    return new Response(`ntfy fetch threw: ${String(error)}`, {
+      status: 500,
+      headers: { 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'no-store' }
+    });
   }
-
-  return new Response('TRMM ntfy test sent successfully. Check your phone.', {
-    status: 200,
-    headers: { 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'no-store' }
-  });
 }

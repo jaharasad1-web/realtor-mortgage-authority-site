@@ -2,13 +2,6 @@ function clean(value, max = 500) {
   return typeof value === 'string' ? value.trim().replace(/\s+/g, ' ').slice(0, max) : '';
 }
 
-function normalizePhone(value) {
-  const digits = String(value || '').replace(/\D/g, '');
-  if (digits.length === 11 && digits.startsWith('1')) return `+${digits}`;
-  if (digits.length === 10) return `+1${digits}`;
-  return '';
-}
-
 function campaignLabel(value) {
   const key = clean(value, 80);
   const labels = {
@@ -67,14 +60,12 @@ async function notifyLead(env, lead) {
   const last = clean(lead.last_name, 80);
   const fullName = `${first}${last ? ` ${last}` : ''}`;
   const email = clean(lead.email, 200).toLowerCase();
-  const phone = normalizePhone(lead.phone);
   const campaign = campaignLabel(lead.campaign);
   const state = clean(lead.state, 10);
   const timeframe = clean(lead.timeframe || lead.timeline, 100);
   const question = clean(lead.primary_obstacle || lead.primary_question || lead.message || lead.goal, 300);
   const pageUrl = clean(lead.page_url, 500);
 
-  // Customer email confirmation is optional and activates automatically if Resend is configured.
   const customerEmail = email ? sendResend(env, {
     to: email,
     subject: `We received your ${campaign} request`,
@@ -85,24 +76,23 @@ async function notifyLead(env, lead) {
     `Campaign: ${campaign}`,
     `Name: ${fullName}`,
     email ? `Email: ${email}` : '',
-    phone ? `Phone: ${phone}` : '',
     state ? `State: ${state}` : '',
     timeframe ? `Timeframe: ${timeframe}` : '',
     question ? `Question/Goal: ${question}` : '',
     pageUrl ? `Landing page: ${pageUrl}` : ''
   ].filter(Boolean);
 
-  // Optional owner email alert if Resend is configured later.
   const ownerEmail = clean(env.NOTIFY_EMAIL, 200) ? sendResend(env, {
     to: clean(env.NOTIFY_EMAIL, 200),
     subject: `New TRMM lead — ${campaign} — ${fullName}`,
     text: `NEW TRMM WEBSITE LEAD\n${alertLines.join('\n')}\n\nOpen your CRM to review the full lead record.`
   }) : Promise.resolve({ skipped: true });
 
-  // Free phone push alert through ntfy. No SMS provider is required.
+  // ntfy is used only as a private-ish alert channel, not as a lead record.
+  // Keep customer names, phone numbers, email addresses and inquiry text out of the push.
   const ownerPush = sendNtfy(env, {
     title: `New TRMM Lead — ${campaign}`,
-    message: `${fullName}${phone ? `\n${phone}` : ''}${state ? `\n${state}` : ''}${question ? `\n${question}` : ''}\n\nCheck CRM for full details.`
+    message: `A new ${campaign} lead was saved successfully.\n\nCheck your TRMM CRM for the customer's full details.`
   });
 
   const results = await Promise.allSettled([customerEmail, ownerEmail, ownerPush]);

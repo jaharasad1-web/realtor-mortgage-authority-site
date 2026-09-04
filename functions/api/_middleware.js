@@ -45,24 +45,20 @@ async function sendResend(env, { to, subject, text }) {
   return { ok: true };
 }
 
-async function sendTwilio(env, { to, body }) {
-  if (!env.TWILIO_ACCOUNT_SID || !env.TWILIO_AUTH_TOKEN || !env.TWILIO_FROM_NUMBER || !to) {
-    return { skipped: true };
-  }
-  const auth = btoa(`${env.TWILIO_ACCOUNT_SID}:${env.TWILIO_AUTH_TOKEN}`);
-  const params = new URLSearchParams();
-  params.set('To', to);
-  params.set('From', env.TWILIO_FROM_NUMBER);
-  params.set('Body', body);
-  const r = await fetch(`https://api.twilio.com/2010-04-01/Accounts/${env.TWILIO_ACCOUNT_SID}/Messages.json`, {
+async function sendNtfy(env, { title, message }) {
+  const topic = clean(env.NTFY_TOPIC, 200);
+  if (!topic) return { skipped: true };
+  const server = (clean(env.NTFY_SERVER, 300) || 'https://ntfy.sh').replace(/\/$/, '');
+  const r = await fetch(`${server}/${encodeURIComponent(topic)}`, {
     method: 'POST',
     headers: {
-      Authorization: `Basic ${auth}`,
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Title': clean(title, 200),
+      'Priority': 'high',
+      'Tags': 'house,rotating_light'
     },
-    body: params.toString()
+    body: message
   });
-  if (!r.ok) throw new Error(`Twilio ${r.status}: ${(await r.text()).slice(0, 300)}`);
+  if (!r.ok) throw new Error(`ntfy ${r.status}: ${(await r.text()).slice(0, 300)}`);
   return { ok: true };
 }
 
@@ -78,19 +74,14 @@ async function notifyLead(env, lead) {
   const question = clean(lead.primary_obstacle || lead.primary_question || lead.message || lead.goal, 300);
   const pageUrl = clean(lead.page_url, 500);
 
+  // Customer email confirmation is optional and activates automatically if Resend is configured.
   const customerEmail = email ? sendResend(env, {
     to: email,
     subject: `We received your ${campaign} request`,
     text: `Hi ${first},\n\nThank you for reaching out to Jahar Asad — The Realtor & Mortgage Man™. I received your ${campaign} request and will review the information you submitted.\n\nYou can call or text me directly at 919-200-3359 if you need immediate assistance.\n\nJahar Asad, BPA\nThe Realtor & Mortgage Man™\nOne Expert. One Solution.™ Buy • Sell • Finance.\nJaharAsad.com\n\nThis is a confirmation of your website inquiry.`
   }) : Promise.resolve({ skipped: true });
 
-  const customerSms = phone ? sendTwilio(env, {
-    to: phone,
-    body: `Hi ${first}, this is Jahar Asad — The Realtor & Mortgage Man™. I received your ${campaign} request and will be in touch. Need me sooner? Call/text 919-200-3359. Reply STOP to opt out.`
-  }) : Promise.resolve({ skipped: true });
-
   const alertLines = [
-    'NEW TRMM WEBSITE LEAD',
     `Campaign: ${campaign}`,
     `Name: ${fullName}`,
     email ? `Email: ${email}` : '',
@@ -101,20 +92,20 @@ async function notifyLead(env, lead) {
     pageUrl ? `Landing page: ${pageUrl}` : ''
   ].filter(Boolean);
 
+  // Optional owner email alert if Resend is configured later.
   const ownerEmail = clean(env.NOTIFY_EMAIL, 200) ? sendResend(env, {
     to: clean(env.NOTIFY_EMAIL, 200),
     subject: `New TRMM lead — ${campaign} — ${fullName}`,
-    text: `${alertLines.join('\n')}\n\nOpen your CRM to review the full lead record.`
+    text: `NEW TRMM WEBSITE LEAD\n${alertLines.join('\n')}\n\nOpen your CRM to review the full lead record.`
   }) : Promise.resolve({ skipped: true });
 
-  const ownerPhone = normalizePhone(env.NOTIFY_PHONE);
-  const ownerSms = ownerPhone ? sendTwilio(env, {
-    to: ownerPhone,
-    body: `NEW TRMM LEAD: ${campaign} — ${fullName}${phone ? ` — ${phone}` : ''}${state ? ` — ${state}` : ''}. Check CRM for details.`
-  }) : Promise.resolve({ skipped: true });
+  // Free phone push alert through ntfy. No SMS provider is required.
+  const ownerPush = sendNtfy(env, {
+    title: `New TRMM Lead — ${campaign}`,
+    message: `${fullName}${phone ? `\n${phone}` : ''}${state ? `\n${state}` : ''}${question ? `\n${question}` : ''}\n\nCheck CRM for full details.`
+  });
 
-  const tasks = [customerEmail, customerSms, ownerEmail, ownerSms];
-  const results = await Promise.allSettled(tasks);
+  const results = await Promise.allSettled([customerEmail, ownerEmail, ownerPush]);
   results.forEach((result, i) => {
     if (result.status === 'rejected') console.error('Lead notification failed', i, String(result.reason));
   });

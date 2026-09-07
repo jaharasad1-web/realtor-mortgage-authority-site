@@ -1,3 +1,4 @@
+// Deployment refresh: force Cloudflare Pages rebuild with current build settings.
 const PMMS_URL = "https://www.freddiemac.com/pmms";
 const META_PIXEL_ID = "1327292961902434";
 

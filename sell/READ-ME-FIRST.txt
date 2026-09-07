@@ -1,0 +1,9 @@
+THIS PACKAGE RESTORES THE FULL HOMEPAGE AND KEEPS THE WORKING MASTERCLASS.
+
+Upload everything INSIDE this folder to the GitHub page where index.html appears.
+Choose Replace when GitHub asks about existing files, then Commit changes.
+Netlify should deploy automatically from the existing linked repository.
+
+After deployment test:
+https://jaharasadtherealtorandmortgageman.netlify.app/
+https://jaharasadtherealtorandmortgageman.netlify.app/homebuying-masterclass

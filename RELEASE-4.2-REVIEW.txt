@@ -1,0 +1,25 @@
+TRMM WEBSITE RELEASE 4.2 — REVIEW ONLY
+DO NOT UPLOAD YET
+
+Includes:
+- redesigned index.html
+- updated masterclasses.html
+- retirement-housing.html
+- reverse-mortgage-community.html
+- assets/site.css
+
+Key changes:
+- Deep Navy #0A1633
+- Slate Blue #4A627A
+- Soft Blue #DCE8F2
+- Light Blue #EEF5FA
+- Charcoal #2B2B2B
+- White #FFFFFF
+- No yellow
+- Homepage now routes retirement visitors to Retirement Housing Center
+- Homepage connects Community and MasterClasses
+- MasterClasses updated to the same navigation + color system
+- Public footprint remains NC, SC, GA, FL and IL
+- Phone remains 919-200-3359
+
+STATUS: REVIEW PACKAGE ONLY. No deployment performed.

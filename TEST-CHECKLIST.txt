@@ -1,0 +1,9 @@
+Test after deployment:
+- Homepage loads on desktop and mobile
+- AI Pre-Approval button
+- Search Homes button
+- New Construction button
+- Free MasterClass button
+- Contact button
+- Phone button
+- QR image loads

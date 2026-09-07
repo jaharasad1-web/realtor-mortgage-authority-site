@@ -1,0 +1,20 @@
+TRMM WEBSITE RELEASE 4.1
+
+FILES
+- assets/theme-override.css  (NEW approved navy/slate/soft-blue palette; no yellow)
+- retirement-housing.html    (NEW)
+- reverse-mortgage-community.html (NEW)
+
+DEPLOY
+1. Upload assets/theme-override.css into /assets
+2. Upload both HTML pages to repository root.
+3. To apply the new colors to the EXISTING site immediately, add this line after assets/site.css in each HTML <head>:
+   <link rel="stylesheet" href="assets/theme-override.css">
+4. Commit to main. Cloudflare Pages should rebuild automatically.
+
+TEST
+https://jaharasad.com/retirement-housing.html
+https://jaharasad.com/reverse-mortgage-community.html
+
+IMPORTANT
+The Facebook group link is intentionally a placeholder until the group exists.

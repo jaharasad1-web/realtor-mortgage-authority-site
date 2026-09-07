@@ -1,0 +1,1 @@
+Extract this ZIP and upload ALL contents to the root of jaharasad1-web/realtor-mortgage-authority-site. Replace matching files, then Commit changes. Cloudflare Pages should redeploy automatically.

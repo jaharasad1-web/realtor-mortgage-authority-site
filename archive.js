@@ -1,0 +1,1 @@
+const q=document.getElementById('archive-search');q?.addEventListener('input',()=>{const term=q.value.toLowerCase();document.querySelectorAll('.archive-item').forEach(i=>i.style.display=i.dataset.search.includes(term)?'flex':'none')});

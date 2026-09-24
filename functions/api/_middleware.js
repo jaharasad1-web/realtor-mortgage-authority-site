@@ -1,3 +1,5 @@
+import { scheduleNurture } from './_nurture.js';
+
 function clean(value, max = 500) {
   return typeof value === 'string' ? value.trim().replace(/\s+/g, ' ').slice(0, max) : '';
 }
@@ -77,6 +79,16 @@ async function notifyLead(env, lead) {
   });
 }
 
+async function afterSuccessfulLead(env, lead) {
+  const results = await Promise.allSettled([
+    notifyLead(env, lead),
+    scheduleNurture(env, lead)
+  ]);
+  results.forEach((result, i) => {
+    if (result.status === 'rejected') console.error('Post-lead automation failed', i, String(result.reason));
+  });
+}
+
 export async function onRequest(context) {
   const { request, env } = context;
   const url = new URL(request.url);
@@ -102,7 +114,7 @@ export async function onRequest(context) {
   const response = await context.next();
 
   if (response.ok) {
-    context.waitUntil(notifyLead(env, lead));
+    context.waitUntil(afterSuccessfulLead(env, lead));
   }
 
   return response;

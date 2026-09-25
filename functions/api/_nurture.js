@@ -88,7 +88,7 @@ export async function scheduleNurture(env, lead) {
   const jobs = messages.map(message => scheduleResend(env, {
     to: email,
     subject: message.subject,
-    text: `Hi ${first},\n\n${message.body}${SIGNATURE}\n\nYou are receiving this follow-up because you requested information from TRMM. Reply to this email if you no longer want follow-up about this inquiry.`,
+    text: `Hi ${first},\n\n${message.body}${SIGNATURE}\n\nYou are receiving this follow-up because you requested information from TRMM. To change your follow-up preference, contact Jahar directly at 919-200-3359.`,
     day: message.day,
     tag: key || 'general'
   }));

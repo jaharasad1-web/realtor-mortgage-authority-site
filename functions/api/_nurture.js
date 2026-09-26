@@ -58,25 +58,17 @@ function trackFor(campaign) {
   return { key, messages: TRACKS[key] || TRACKS.general };
 }
 
-async function scheduleResend(env, { to, subject, text, day, tag }) {
+async function sendResend(env, { to, subject, text, scheduledAt }) {
   if (!env.RESEND_API_KEY || !to) return { skipped: true };
   const from = clean(env.EMAIL_FROM, 200) || 'TRMM <onboarding@resend.dev>';
+  const payload = { from, to: [to], subject, text };
+  if (scheduledAt) payload.scheduled_at = scheduledAt;
   const r = await fetch('https://api.resend.com/emails', {
     method: 'POST',
-    headers: {
-      Authorization: `Bearer ${env.RESEND_API_KEY}`,
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      from,
-      to: [to],
-      subject,
-      text,
-      scheduled_at: `in ${day} days`,
-      tags: [{ name: 'campaign', value: String(tag || 'general').replace(/[^A-Za-z0-9_-]/g, '_').slice(0, 256) }]
-    })
+    headers: { Authorization: `Bearer ${env.RESEND_API_KEY}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
   });
-  if (!r.ok) throw new Error(`Resend schedule ${r.status}: ${(await r.text()).slice(0, 300)}`);
+  if (!r.ok) throw new Error(`Resend ${r.status}: ${(await r.text()).slice(0, 300)}`);
   return r.json().catch(() => ({ ok: true }));
 }
 
@@ -85,15 +77,30 @@ export async function scheduleNurture(env, lead) {
   if (!email || !consented(lead.consent)) return { skipped: true };
   const first = clean(lead.first_name || lead.name, 80) || 'there';
   const { key, messages } = trackFor(lead.campaign);
-  const jobs = messages.map(message => scheduleResend(env, {
+  const now = Date.now();
+  const jobs = messages.map(message => sendResend(env, {
     to: email,
     subject: message.subject,
     text: `Hi ${first},\n\n${message.body}${SIGNATURE}\n\nYou are receiving this follow-up because you requested information from TRMM. To change your follow-up preference, contact Jahar directly at 919-200-3359.`,
-    day: message.day,
-    tag: key || 'general'
+    scheduledAt: new Date(now + message.day * 24 * 60 * 60 * 1000).toISOString()
   }));
   const results = await Promise.allSettled(jobs);
   const failures = results.filter(r => r.status === 'rejected');
   failures.forEach(r => console.error('Nurture scheduling failed', String(r.reason)));
-  return { scheduled: results.length - failures.length, failed: failures.length, track: key || 'general' };
+  const scheduled = results.length - failures.length;
+
+  const owner = clean(env.NOTIFY_EMAIL, 200);
+  if (owner) {
+    try {
+      await sendResend(env, {
+        to: owner,
+        subject: `TRMM nurture status — ${key || 'general'} — ${scheduled}/${results.length} scheduled`,
+        text: `Nurture scheduling status\nCampaign: ${key || 'general'}\nScheduled: ${scheduled}\nFailed: ${failures.length}\n\nThis operational message confirms whether Resend accepted the follow-up schedule for the latest successful website lead.`
+      });
+    } catch (error) {
+      console.error('Nurture status notification failed', String(error));
+    }
+  }
+
+  return { scheduled, failed: failures.length, track: key || 'general' };
 }

@@ -20,7 +20,8 @@ function campaignLabel(value) {
     'pre-foreclosure-solutions': 'Pre-Foreclosure Help',
     'rent-vs-own': 'Rent vs. Own',
     'seller-strategy': 'Home Sale Options',
-    'sell-equity-finance-next-home': 'Sell • Equity • Finance • Next Home'
+    'sell-equity-finance-next-home': 'Sell • Equity • Finance • Next Home',
+    'dscr-investors': 'DSCR Property Analysis'
   };
   return labels[key] || key || 'TRMM Website';
 }
@@ -93,7 +94,7 @@ export async function onRequest(context) {
   const { request, env } = context;
   const url = new URL(request.url);
 
-  if (request.method !== 'POST' || url.pathname !== '/api/lead') {
+  if (request.method !== 'POST' || !['/api/lead', '/api/dscr-lead'].includes(url.pathname)) {
     return context.next();
   }
 
@@ -107,6 +108,7 @@ export async function onRequest(context) {
       const fd = await clone.formData();
       lead = Object.fromEntries(fd.entries());
     }
+    if (url.pathname === '/api/dscr-lead') lead.campaign = 'dscr-investors';
   } catch (error) {
     console.error('Could not parse lead for notifications', String(error));
   }

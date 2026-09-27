@@ -30,6 +30,7 @@ const TRACKS = {
     ['Quick question about your move', `Which best describes you?\n\nA. I need to sell and buy soon.\nB. I am considering a move this year.\nC. I want to know my equity first.\nD. I am researching options.\n\nReply A, B, C or D.`],
     ['When you are ready for the next move', `This is the last message in this initial follow-up. When you are ready, I can help you look at the sale, equity and next-home financing as one coordinated strategy.`]
   ],
+  'sell-and-buy': 'sell-equity-finance-next-home',
   'seller-strategy': 'sell-equity-finance-next-home',
   'new-construction': [
     ['Your new-construction home plan', `Thanks again for reaching out about new construction. Builder contracts, deposits, design selections, completion timelines, incentives, appraisals and financing can work differently from a typical resale transaction. I can help you look at the real-estate and mortgage sides together.`],

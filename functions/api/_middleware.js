@@ -1,4 +1,5 @@
 import { scheduleNurture } from './_nurture.js';
+import { hasDedicatedCampaignNurture, scheduleCampaignNurture } from './_campaign_nurture.js';
 
 function clean(value, max = 500) {
   return typeof value === 'string' ? value.trim().replace(/\s+/g, ' ').slice(0, max) : '';
@@ -21,6 +22,9 @@ function campaignLabel(value) {
     'rent-vs-own': 'Rent vs. Own',
     'seller-strategy': 'Home Sale Options',
     'sell-equity-finance-next-home': 'Sell • Equity • Finance • Next Home',
+    'we-buy-homes': 'Home Sale Options',
+    'fire-your-landlord': 'Fire Your Landlord',
+    'right-sizing': 'Right-Sizing',
     'dscr-investors': 'DSCR Property Analysis'
   };
   return labels[key] || key || 'TRMM Website';
@@ -80,10 +84,16 @@ async function notifyLead(env, lead) {
   });
 }
 
+async function nurtureLead(env, lead) {
+  return hasDedicatedCampaignNurture(lead.campaign)
+    ? scheduleCampaignNurture(env, lead)
+    : scheduleNurture(env, lead);
+}
+
 async function afterSuccessfulLead(env, lead) {
   const results = await Promise.allSettled([
     notifyLead(env, lead),
-    scheduleNurture(env, lead)
+    nurtureLead(env, lead)
   ]);
   results.forEach((result, i) => {
     if (result.status === 'rejected') console.error('Post-lead automation failed', i, String(result.reason));

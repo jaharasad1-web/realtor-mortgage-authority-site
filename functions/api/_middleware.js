@@ -1,5 +1,6 @@
 import { scheduleNurture } from './_nurture.js';
 import { hasDedicatedCampaignNurture, scheduleCampaignNurture } from './_campaign_nurture.js';
+import { hasPriorityNurture, schedulePriorityNurture } from './_priority_nurture.js';
 
 function clean(value, max = 500) {
   return typeof value === 'string' ? value.trim().replace(/\s+/g, ' ').slice(0, max) : '';
@@ -9,9 +10,12 @@ function campaignLabel(value) {
   const key = clean(value, 80);
   const labels = {
     'first-time-homebuyer': 'First-Time Homebuyer',
+    'first-time-homebuyer-masterclass': 'Homebuying 101™ MasterClass',
+    'homebuying-101-masterclass': 'Homebuying 101™ MasterClass',
     'down-payment-assistance': 'Down Payment Assistance',
     'reverse-mortgage': 'Reverse Mortgage / HECM',
     'reverse-mortgage-hecm': 'Reverse Mortgage / HECM',
+    'reverse-mortgage-masterclass': 'Reverse Mortgage MasterClass',
     'usda': 'USDA Financing',
     'usda-0-down': 'USDA Financing',
     'manufactured-homes': 'Manufactured Homes',
@@ -35,10 +39,7 @@ async function sendResend(env, { to, subject, text }) {
   const from = clean(env.EMAIL_FROM, 200) || 'TRMM <onboarding@resend.dev>';
   const r = await fetch('https://api.resend.com/emails', {
     method: 'POST',
-    headers: {
-      Authorization: `Bearer ${env.RESEND_API_KEY}`,
-      'Content-Type': 'application/json'
-    },
+    headers: { Authorization: `Bearer ${env.RESEND_API_KEY}`, 'Content-Type': 'application/json' },
     body: JSON.stringify({ from, to: [to], subject, text })
   });
   if (!r.ok) throw new Error(`Resend ${r.status}: ${(await r.text()).slice(0, 300)}`);
@@ -85,16 +86,13 @@ async function notifyLead(env, lead) {
 }
 
 async function nurtureLead(env, lead) {
-  return hasDedicatedCampaignNurture(lead.campaign)
-    ? scheduleCampaignNurture(env, lead)
-    : scheduleNurture(env, lead);
+  if (hasPriorityNurture(lead.campaign)) return schedulePriorityNurture(env, lead);
+  if (hasDedicatedCampaignNurture(lead.campaign)) return scheduleCampaignNurture(env, lead);
+  return scheduleNurture(env, lead);
 }
 
 async function afterSuccessfulLead(env, lead) {
-  const results = await Promise.allSettled([
-    notifyLead(env, lead),
-    nurtureLead(env, lead)
-  ]);
+  const results = await Promise.allSettled([notifyLead(env, lead), nurtureLead(env, lead)]);
   results.forEach((result, i) => {
     if (result.status === 'rejected') console.error('Post-lead automation failed', i, String(result.reason));
   });
@@ -103,31 +101,20 @@ async function afterSuccessfulLead(env, lead) {
 export async function onRequest(context) {
   const { request, env } = context;
   const url = new URL(request.url);
-
-  if (request.method !== 'POST' || !['/api/lead', '/api/dscr-lead'].includes(url.pathname)) {
-    return context.next();
-  }
+  if (request.method !== 'POST' || !['/api/lead', '/api/dscr-lead'].includes(url.pathname)) return context.next();
 
   let lead = {};
   try {
     const clone = request.clone();
     const type = (clone.headers.get('content-type') || '').toLowerCase();
-    if (type.includes('application/json')) {
-      lead = await clone.json();
-    } else {
-      const fd = await clone.formData();
-      lead = Object.fromEntries(fd.entries());
-    }
+    if (type.includes('application/json')) lead = await clone.json();
+    else lead = Object.fromEntries((await clone.formData()).entries());
     if (url.pathname === '/api/dscr-lead') lead.campaign = 'dscr-investors';
   } catch (error) {
     console.error('Could not parse lead for notifications', String(error));
   }
 
   const response = await context.next();
-
-  if (response.ok) {
-    context.waitUntil(afterSuccessfulLead(env, lead));
-  }
-
+  if (response.ok) context.waitUntil(afterSuccessfulLead(env, lead));
   return response;
 }

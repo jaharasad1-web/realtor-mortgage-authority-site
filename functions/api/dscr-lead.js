@@ -1,4 +1,4 @@
-const ALLOWED_STATES=new Set(["NC","SC","GA","IL","FL"]);
+const ALLOWED_STATES=new Set("AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY".split(" "));
 function json(body,status=200){return new Response(JSON.stringify(body),{status,headers:{"content-type":"application/json; charset=utf-8","cache-control":"no-store"}})}
 function clean(v,max=250){return typeof v==="string"?v.trim().replace(/\s+/g," ").slice(0,max):""}
 function phone(v){const d=String(v||"").replace(/\D/g,"");return d.length===11&&d.startsWith("1")?d.slice(1):d}

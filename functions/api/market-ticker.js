@@ -3,9 +3,20 @@
 const SERIES = ["MORTGAGE30US","MORTGAGE15US","DGS2","DGS10"];
 async function readSeries(id) {
   const url = "https://fred.stlouisfed.org/graph/fredgraph.csv?id=" + encodeURIComponent(id);
-  const response = await fetch(url, {headers:{"Accept":"text/csv","User-Agent":"TRMM-Market-Ticker/1.0"}});
-  if (!response.ok) throw new Error("FRED "+id+" HTTP "+response.status);
-  const csv = await response.text();
+  // FRED occasionally returns Cloudflare 520 to edge workers. Retry transient failures.
+  let csv, lastError;
+  for (let attempt=0; attempt<3; attempt++) {
+    try {
+      const response=await fetch(url, {headers:{"Accept":"text/csv"},cf:{cacheTtl:3600,cacheEverything:true}});
+      if (!response.ok) throw new Error("FRED "+id+" HTTP "+response.status);
+      csv=await response.text();
+      break;
+    } catch (error) {
+      lastError=error;
+      if(attempt<2) await new Promise(resolve=>setTimeout(resolve,300*(attempt+1)));
+    }
+  }
+  if (!csv) throw lastError || new Error("FRED unavailable");
   const lines = csv.trim().split(/\r?\n/);
   let latest = null;
   for (const line of lines.slice(1)) {

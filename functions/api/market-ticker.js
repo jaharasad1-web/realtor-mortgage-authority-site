@@ -25,6 +25,7 @@ export async function onRequestGet() {
     if (ageDays(data.MORTGAGE30US.date)>14 || ageDays(data.MORTGAGE15US.date)>14 || ageDays(data.DGS2.date)>10 || ageDays(data.DGS10.date)>10) throw new Error("Market data is too old");
     return Response.json({source:"Federal Reserve Economic Data (FRED); Freddie Mac PMMS / US Treasury",rates:data},{headers:{"Cache-Control":"public, max-age=1800, s-maxage=21600","Access-Control-Allow-Origin":"*"}});
   } catch(error) {
-    return Response.json({error:"Current market data temporarily unavailable"},{status:503,headers:{"Cache-Control":"no-store"}});
+    console.error("TRMM ticker feed failure", String(error));
+    return Response.json({error:"Current market data temporarily unavailable",diagnostic:String(error?.message || error).slice(0,180)},{status:503,headers:{"Cache-Control":"no-store"}});
   }
 }

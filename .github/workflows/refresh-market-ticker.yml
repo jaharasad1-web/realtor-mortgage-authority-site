@@ -16,37 +16,47 @@ jobs:
       - name: Download published market series
         run: |
           python - <<'PY'
-          import csv, io, json, time, urllib.request, datetime, os
-          ids = ('MORTGAGE30US','MORTGAGE15US','DGS2','DGS10')
-          result = {}
-          for key in ids:
-              url='https://fred.stlouisfed.org/graph/fredgraph.csv?id='+key
-              last=None
-              for attempt in range(4):
-                  try:
-                      req=urllib.request.Request(url,headers={'User-Agent':'Mozilla/5.0','Accept':'text/csv'})
-                      with urllib.request.urlopen(req,timeout=30) as response:
-                          rows=list(csv.DictReader(io.StringIO(response.read().decode('utf-8-sig'))))
-                      for row in reversed(rows):
-                          raw=row.get(key,'').strip()
-                          date=row.get('DATE') or row.get('observation_date')
-                          if raw and raw!='.' and date:
-                              result[key]={'date':date,'value':float(raw)}
-                              break
-                      if key not in result: raise ValueError('No observations for '+key)
-                      break
-                  except Exception as exc:
-                      last=exc
-                      time.sleep(2*(attempt+1))
-              if key not in result: raise RuntimeError(f'{key}: {last}')
-          now=datetime.datetime.now(datetime.timezone.utc)
+          import csv, datetime, io, json, re, urllib.request, xml.etree.ElementTree as ET
+          from html import unescape
+          def get(url):
+              req=urllib.request.Request(url,headers={'User-Agent':'Mozilla/5.0 (compatible; TRMM-public-market-data/1.0)','Accept':'text/html,application/xml,text/csv'})
+              with urllib.request.urlopen(req,timeout=25) as response:
+                  return response.read().decode('utf-8-sig')
+          # Read weekly fixed-rate mortgage averages directly from Freddie Mac.
+          page=get('https://www.freddiemac.com/pmms/archive')
+          clean=re.sub(r'<[^>]+>',' ',page)
+          clean=unescape(re.sub(r'\\s+',' ',clean))
+          today=datetime.datetime.now(datetime.timezone.utc).date()
+          pattern=r'([A-Z][a-z]+\\s+\\d{1,2},\\s+\\d{4})\\s+(?:Average Rates\\s+)?(\\d+\\.\\d+)\\s*%\\s+(\\d+\\.\\d+)\\s*%'
+          matches=[]
+          for d,a,b in re.findall(pattern,clean):
+              date=datetime.datetime.strptime(d,'%B %d, %Y').date()
+              if date<=today: matches.append((date,float(a),float(b)))
+          if not matches: raise RuntimeError('Could not parse Freddie Mac weekly archive')
+          day,r30,r15=max(matches)
+          result={'MORTGAGE30US':{'date':day.isoformat(),'value':r30},'MORTGAGE15US':{'date':day.isoformat(),'value':r15}}
+          # Read daily Treasury 2-year and 10-year yields from Treasury's public CSV.
+          year=str(today.year)
+          url=f'https://home.treasury.gov/resource-center/data-chart-center/interest-rates/daily-treasury-rates.csv/{year}/all?type=daily_treasury_yield_curve&field_tdr_date_value={year}&page&_format=csv'
+          rows=list(csv.DictReader(io.StringIO(get(url))))
+          observations=[]
+          for row in rows:
+              try:
+                  d=datetime.datetime.strptime(row.get('Date',''),'%m/%d/%Y').date()
+                  a=float(row['2 Yr'])
+                  b=float(row['10 Yr'])
+                  if d<=today: observations.append((d,a,b))
+              except (ValueError,KeyError,TypeError): continue
+          if not observations: raise RuntimeError('No recent Treasury yield observations')
+          day,a,b=max(observations)
+          result['DGS2']={'date':day.isoformat(),'value':a}
+          result['DGS10']={'date':day.isoformat(),'value':b}
           for key,item in result.items():
-              age=(now.date()-datetime.date.fromisoformat(item['date'])).days
-              limit=14 if key.startswith('MORTGAGE') else 10
-              if age>limit: raise ValueError(f'Stale {key}: {item["date"]}')
-          with open('market-ticker.json','w') as f:
-              json.dump({'source':'FRED / Freddie Mac PMMS / US Treasury','rates':result},f,indent=2)
-              f.write('\n')
+              age=(today-datetime.date.fromisoformat(item['date'])).days
+              if age>(14 if key.startswith('MORTGAGE') else 10): raise RuntimeError(f'Stale published series {key}: {item["date"]}')
+          with open('market-ticker.json','w') as output:
+              json.dump({'source':'Freddie Mac Primary Mortgage Market Survey / US Treasury','rates':result},output,indent=2)
+              output.write('\\n')
           PY
       - name: Publish if values changed
         run: |

@@ -8,7 +8,7 @@ export async function onRequestGet({env,request}) {
     const data = await response.json();
     for(const id of ["MORTGAGE30US","MORTGAGE15US","DGS2","DGS10"]){
       const row=data.rates?.[id];
-      if(!row || !Number.isFinite(row.value) || !/^\\d{4}-\\d{2}-\\d{2}$/.test(row.date)) throw new Error("Missing published series: "+id);
+      if(!row || !Number.isFinite(row.value) || !/^\d{4}-\d{2}-\d{2}$/.test(row.date)) throw new Error("Missing published series: "+id);
       const days=(Date.now()-Date.parse(row.date+"T00:00:00Z"))/86400000;
       if(days>(id.startsWith("MORTGAGE")?14:10)) throw new Error("Published snapshot is stale: "+id);
     }

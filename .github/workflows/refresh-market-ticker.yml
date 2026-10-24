@@ -1,0 +1,56 @@
+name: Refresh TRMM market ticker
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '20 13 * * 1-5'
+permissions:
+  contents: write
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Download published market series
+        run: |
+          python - <<'PY'
+          import csv, io, json, time, urllib.request, datetime, os
+          ids = ('MORTGAGE30US','MORTGAGE15US','DGS2','DGS10')
+          result = {}
+          for key in ids:
+              url='https://fred.stlouisfed.org/graph/fredgraph.csv?id='+key
+              last=None
+              for attempt in range(4):
+                  try:
+                      req=urllib.request.Request(url,headers={'User-Agent':'Mozilla/5.0','Accept':'text/csv'})
+                      with urllib.request.urlopen(req,timeout=30) as response:
+                          rows=list(csv.DictReader(io.StringIO(response.read().decode('utf-8-sig'))))
+                      for row in reversed(rows):
+                          raw=row.get(key,'').strip()
+                          date=row.get('DATE') or row.get('observation_date')
+                          if raw and raw!='.' and date:
+                              result[key]={'date':date,'value':float(raw)}
+                              break
+                      if key not in result: raise ValueError('No observations for '+key)
+                      break
+                  except Exception as exc:
+                      last=exc
+                      time.sleep(2*(attempt+1))
+              if key not in result: raise RuntimeError(f'{key}: {last}')
+          now=datetime.datetime.now(datetime.timezone.utc)
+          for key,item in result.items():
+              age=(now.date()-datetime.date.fromisoformat(item['date'])).days
+              limit=14 if key.startswith('MORTGAGE') else 10
+              if age>limit: raise ValueError(f'Stale {key}: {item["date"]}')
+          with open('market-ticker.json','w') as f:
+              json.dump({'source':'FRED / Freddie Mac PMMS / US Treasury','rates':result},f,indent=2)
+              f.write('\n')
+          PY
+      - name: Publish if values changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add market-ticker.json
+          git diff --cached --quiet || (git commit -m "Update published TRMM market ticker data" && git push)

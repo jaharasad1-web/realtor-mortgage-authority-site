@@ -19,8 +19,8 @@ const ROUTES = {
   "right-sizing": { campaign: "right-sizing", destination: "https://trmm-onedesk.pages.dev/campaigns/right-sizing.html" },
   "rightsizing-options": { campaign: "right-sizing", destination: "https://trmm-onedesk.pages.dev/campaigns/right-sizing.html" },
   "downsize-upsize-right-size": { campaign: "right-sizing", destination: "https://trmm-onedesk.pages.dev/campaigns/right-sizing.html" },
-  "dscr": { campaign: "dscr-investors", destination: "/campaigns/dscr.html" },
-  "dscr-investors": { campaign: "dscr-investors", destination: "/campaigns/dscr.html" },
+  "dscr": { campaign: "dscr-investors", destination: "/dscr-investors.html" },
+  "dscr-investors": { campaign: "dscr-investors", destination: "/dscr-investors.html" },
   "sell-equity-finance-next-home": { campaign: "sell-and-buy", destination: "/campaigns/sell-equity-finance-next-home.html" }
 };
 
